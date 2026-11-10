@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CityFee – City dropdown and delivery fees by city for WooCommerce</title>
+<meta name="description" content="CityFee replaces the WooCommerce checkout city field with a dropdown of your cities and charges the delivery fee of the chosen city. Classic and block checkout. By Digital Services SARL.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='white'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://dssarl.com/cityfee/">
+<meta property="og:title" content="CityFee – City dropdown and delivery fees by city for WooCommerce">
+<meta property="og:description" content="A city dropdown at checkout and a delivery fee per city, for stores in countries without postcodes.">
+<meta property="og:url" content="https://dssarl.com/cityfee/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Kufi+Arabic:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8f7;--card:#fff;--ink:#14201d;--muted:#5b6b67;--line:#e3e8e6;--brand:#0f766e;--brand-ink:#fff;--soft:#e6f4f1}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1514;--card:#16201e;--ink:#e8efed;--muted:#9fb0ab;--line:#26332f;--brand:#2dd4bf;--brand-ink:#06201c;--soft:#15302b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+html[dir=rtl] body{font-family:"Noto Kufi Arabic",Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--ink)}
+.logo b{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand);color:var(--brand-ink);font-size:14px}
+.langs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.langs button{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;padding:4px 12px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink)}
+.hero{padding:48px 0 32px}
+.kicker{color:var(--brand);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+html[dir=rtl] .kicker{letter-spacing:0}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.15;margin:10px 0 16px;max-width:780px}
+.lead{color:var(--muted);font-size:18px;max-width:680px;margin:0 0 28px}
+.btn{display:inline-block;background:var(--brand);color:var(--brand-ink);padding:12px 20px;border-radius:10px;font-weight:600;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);margin-inline-start:8px}
+.note{color:var(--muted);font-size:14px;margin:12px 0 0}
+section{padding:32px 0}
+h2{font-size:26px;margin:0 0 18px}
+.values{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.values div{padding:18px;border-inline-start:3px solid var(--brand);background:var(--card);border-radius:10px}
+.values strong{display:block;margin-bottom:4px}
+.values span{color:var(--muted);font-size:15px}
+.steps{margin:0;padding-inline-start:22px;color:var(--muted);max-width:760px}
+.steps li{margin-bottom:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+table{width:100%;border-collapse:collapse;min-width:480px}
+th,td{padding:12px 16px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{font-size:14px;color:var(--muted);font-weight:600}
+td.c,th.c{text-align:center;width:90px}
+tr:last-child td{border-bottom:0}
+.yes{color:var(--brand);font-weight:800}
+.no{color:var(--muted)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px}
+.plan h3{margin:0 0 4px;font-size:18px}
+.price{font-size:36px;font-weight:800;margin:6px 0 2px}
+.price small{font-size:16px;font-weight:600;color:var(--muted)}
+.plan p{color:var(--muted);margin:0}
+.facts{margin:0;padding-inline-start:20px;color:var(--muted)}
+.contact{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted);font-size:14px}
+@media (max-width:560px){.btn.ghost{margin:10px 0 0}.hero{padding-top:24px}header{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="/"><b>DS</b><span>Digital Services SARL</span></a>
+  <nav class="langs" aria-label="Language">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="fr" aria-pressed="false">FR</button>
+    <button data-lang="ar" aria-pressed="false">ع</button>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <div class="kicker" data-t="kicker">WooCommerce plugin</div>
+  <h1>CityFee</h1>
+  <p class="lead" data-t="lead">A city dropdown at checkout and a delivery fee for each city. For stores in countries where couriers price by city, not by postcode.</p>
+  <a class="btn" href="https://checkout.freemius.com/plugin/44216/plan/77924/?trial=free" data-t="cta1">Start 7-day free trial</a><a class="btn ghost" href="#pricing" data-t="cta2">See pricing</a>
+  <p class="note" data-t="ctaNote">No card needed for the trial.</p>
+</div>
+
+<section id="what">
+  <h2 data-t="whatTitle">What CityFee does</h2>
+  <div class="values">
+    <div><strong data-t="w1t">City dropdown</strong><span data-t="w1d">The free-text city field becomes a list of the cities you deliver to, per country, for billing and shipping addresses.</span></div>
+    <div><strong data-t="w2t">Delivery fee per city</strong><span data-t="w2d">The "Delivery by city" shipping method charges the fee of the chosen city, with a default fee and "not delivered" cities.</span></div>
+    <div><strong data-t="w3t">Classic and block checkout</strong><span data-t="w3d">Works in the classic WooCommerce checkout and the Checkout block. The fee updates when the customer changes the city.</span></div>
+    <div><strong data-t="w4t">Arabic and French ready</strong><span data-t="w4d">Translation-ready and right-to-left ready. French and Arabic translations have been prepared.</span></div>
+  </div>
+</section>
+
+<section id="how">
+  <h2 data-t="howTitle">How it works</h2>
+  <ol class="steps">
+    <li data-t="s1">Go to WooCommerce &gt; CityFee, choose a country and add or paste your cities with their fees.</li>
+    <li data-t="s2">In WooCommerce &gt; Settings &gt; Shipping, add "Delivery by city" to the zone that covers the country and set the default fee.</li>
+    <li data-t="s3">Customers choose their city from the list and see its delivery fee at checkout.</li>
+  </ol>
+</section>
+
+<section id="compare">
+  <h2 data-t="cmpTitle">Free and Pro</h2>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th data-t="cmpFeature">Feature</th><th class="c" data-t="cmpFree">Free</th><th class="c">Pro</th></tr></thead>
+    <tbody>
+      <tr><td data-t="f1">City dropdown per country, classic checkout and Checkout block</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f2">Your own city lists: add, edit, hide, reorder, other spelling</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f3">Paste a whole list at once, with fees</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f4">Fee per city, default fee, "not delivered" cities</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f5">Bulk edit of fees</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f6">Cities as regions in shipping zones; city copied into orders</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f7">Postcode field hidden per country (optional)</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f8">HPOS compatible</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p1">City groups (for example Zone A / B / C) with one fee per group</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p2">Free delivery above a cart amount, per city or group</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p3">Hide Cash on Delivery for selected cities</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p4">Full CSV import and export of city lists</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <!-- TODO: link "Free version on WordPress.org" to https://wordpress.org/plugins/cityfee/ once WordPress.org approves CityFee, and drop "(coming soon)". -->
+  <p class="note" data-t="freeNote">Free version on WordPress.org (coming soon). The free plugin works on its own and shows no advertising.</p>
+</section>
+
+<section id="pricing">
+  <h2 data-t="priceTitle">CityFee Pro pricing</h2>
+  <div class="plans">
+    <div class="card plan"><h3 data-t="plan1">1 site</h3><div class="price">$39 <small data-t="yr">/ year</small></div><p data-t="plan1d">For one store.</p></div>
+    <div class="card plan"><h3 data-t="plan5">5 sites</h3><div class="price">$79 <small data-t="yr">/ year</small></div><p data-t="plan5d">For up to five stores.</p></div>
+  </div>
+  <ul class="facts">
+    <li data-t="k1">7-day free trial, no card needed.</li>
+    <li data-t="k2">30-day refund if a bug can't be fixed.</li>
+  </ul>
+  <p style="margin-top:20px"><a class="btn" href="https://checkout.freemius.com/plugin/44216/plan/77924/?trial=free" data-t="cta1">Start 7-day free trial</a></p>
+</section>
+
+<section id="contact">
+  <div class="card contact">
+    <div>
+      <h2 data-t="contactTitle" style="margin-bottom:6px">Questions?</h2>
+      <p style="margin:0;color:var(--muted)" data-t="by">CityFee is made by Digital Services SARL, Nouakchott, Mauritania.</p>
+    </div>
+    <a class="btn" href="mailto:contact@dssarl.com">contact@dssarl.com</a>
+  </div>
+</section>
+</main>
+
+<footer>© <span id="y">2026</span> Digital Services SARL · <a href="/" data-t="home">All our plugins</a> · <span data-t="tm">WordPress and WooCommerce are trademarks of their respective owners.</span></footer>
+</div>
+
+<script>
+const T={
+ fr:{kicker:"Extension WooCommerce",lead:"Une liste déroulante des villes au paiement et des frais de livraison pour chaque ville. Pour les boutiques des pays où les livreurs facturent par ville, et non par code postal.",cta1:"Essai gratuit de 7 jours",cta2:"Voir les tarifs",ctaNote:"Aucune carte bancaire n'est demandée pour l'essai.",whatTitle:"Ce que fait CityFee",w1t:"Liste des villes",w1d:"Le champ ville en texte libre devient une liste des villes que vous livrez, par pays, pour les adresses de facturation et de livraison.",w2t:"Frais de livraison par ville",w2d:"La méthode « Livraison par ville » applique les frais de la ville choisie, avec des frais par défaut et des villes « non livrées ».",w3t:"Paiement classique et en blocs",w3d:"Fonctionne avec le paiement WooCommerce classique et le bloc Paiement. Les frais se mettent à jour quand le client change de ville.",w4t:"Prêt pour l'arabe et le français",w4d:"Prêt pour la traduction et l'écriture de droite à gauche. Des traductions française et arabe ont été préparées.",howTitle:"Comment ça marche",s1:"Allez dans WooCommerce &gt; CityFee, choisissez un pays et ajoutez ou collez vos villes avec leurs frais.",s2:"Dans WooCommerce &gt; Réglages &gt; Expédition, ajoutez « Livraison par ville » à la zone qui couvre le pays et fixez les frais par défaut.",s3:"Vos clients choisissent leur ville dans la liste et voient ses frais de livraison au paiement.",cmpTitle:"Gratuit et Pro",cmpFeature:"Fonction",cmpFree:"Gratuit",f1:"Liste des villes par pays, paiement classique et bloc Paiement",f2:"Vos propres listes : ajouter, modifier, masquer, réordonner, autre graphie",f3:"Coller une liste entière d'un coup, avec les frais",f4:"Frais par ville, frais par défaut, villes « non livrées »",f5:"Modification groupée des frais",f6:"Villes utilisables comme régions des zones d'expédition ; ville copiée dans les commandes",f7:"Champ code postal masqué par pays (optionnel)",f8:"Compatible HPOS",p1:"Groupes de villes (par exemple Zone A / B / C) avec un tarif par groupe",p2:"Livraison gratuite au-delà d'un montant de panier, par ville ou par groupe",p3:"Masquer le paiement à la livraison pour certaines villes",p4:"Import et export CSV complets des listes de villes",freeNote:"Version gratuite sur WordPress.org (bientôt). L'extension gratuite fonctionne seule et n'affiche aucune publicité.",priceTitle:"Tarifs de CityFee Pro",plan1:"1 site",plan5:"5 sites",yr:"/ an",plan1d:"Pour une boutique.",plan5d:"Jusqu'à cinq boutiques.",k1:"Essai gratuit de 7 jours, sans carte bancaire.",k2:"Remboursement sous 30 jours si un bug ne peut pas être corrigé.",contactTitle:"Des questions ?",by:"CityFee est conçu par Digital Services SARL, Nouakchott, Mauritanie.",home:"Toutes nos extensions",tm:"WordPress et WooCommerce sont des marques de leurs propriétaires respectifs.",title:"CityFee – Liste des villes et frais de livraison par ville pour WooCommerce"},
+ ar:{kicker:"إضافة ووكومرس",lead:"قائمة منسدلة للمدن عند إتمام الطلب ورسوم توصيل لكل مدينة. للمتاجر في الدول التي تحدد فيها شركات التوصيل السعر حسب المدينة وليس حسب الرمز البريدي.",cta1:"ابدأ تجربة مجانية لمدة 7 أيام",cta2:"الأسعار",ctaNote:"لا حاجة إلى بطاقة بنكية للتجربة.",whatTitle:"ماذا تفعل CityFee",w1t:"قائمة المدن",w1d:"يتحول حقل المدينة النصي إلى قائمة بالمدن التي توصل إليها، لكل دولة، في عنوان الفوترة وعنوان الشحن.",w2t:"رسوم توصيل لكل مدينة",w2d:"طريقة الشحن «التوصيل حسب المدينة» تحتسب رسوم المدينة المختارة، مع رسوم افتراضية ومدن «لا يتم التوصيل إليها».",w3t:"صفحة الدفع الكلاسيكية والمكتلة",w3d:"تعمل مع صفحة الدفع الكلاسيكية في ووكومرس ومع مكتلة الدفع. تتحدث الرسوم عندما يغيّر العميل المدينة.",w4t:"جاهزة للعربية والفرنسية",w4d:"جاهزة للترجمة وللكتابة من اليمين إلى اليسار. تم إعداد ترجمتين فرنسية وعربية.",howTitle:"كيف تعمل",s1:"اذهب إلى WooCommerce &gt; CityFee، اختر دولة وأضف مدنك أو الصقها مع رسومها.",s2:"في WooCommerce &gt; الإعدادات &gt; الشحن، أضف «التوصيل حسب المدينة» إلى المنطقة التي تشمل الدولة وحدد الرسوم الافتراضية.",s3:"يختار العملاء مدينتهم من القائمة ويرون رسوم توصيلها عند إتمام الطلب.",cmpTitle:"المجانية وPro",cmpFeature:"الميزة",cmpFree:"مجانية",f1:"قائمة المدن لكل دولة، في صفحة الدفع الكلاسيكية ومكتلة الدفع",f2:"قوائم مدنك الخاصة: إضافة، تعديل، إخفاء، ترتيب، كتابة أخرى للاسم",f3:"لصق قائمة كاملة دفعة واحدة مع الرسوم",f4:"رسوم لكل مدينة، رسوم افتراضية، مدن «لا يتم التوصيل إليها»",f5:"تعديل الرسوم دفعة واحدة",f6:"المدن كمناطق في مناطق الشحن؛ ونسخ المدينة إلى الطلبات",f7:"إخفاء حقل الرمز البريدي لكل دولة (اختياري)",f8:"متوافقة مع HPOS",p1:"مجموعات مدن (مثلًا المنطقة A / B / C) برسوم واحدة لكل مجموعة",p2:"توصيل مجاني فوق مبلغ معيّن للسلة، لكل مدينة أو مجموعة",p3:"إخفاء الدفع عند الاستلام لمدن مختارة",p4:"استيراد وتصدير كامل لقوائم المدن بصيغة CSV",freeNote:"النسخة المجانية على WordPress.org (قريبًا). تعمل الإضافة المجانية وحدها ولا تعرض أي إعلانات.",priceTitle:"أسعار CityFee Pro",plan1:"موقع واحد",plan5:"5 مواقع",yr:"/ سنة",plan1d:"لمتجر واحد.",plan5d:"حتى خمسة متاجر.",k1:"تجربة مجانية لمدة 7 أيام، بدون بطاقة بنكية.",k2:"استرداد المبلغ خلال 30 يومًا إذا تعذّر إصلاح خلل.",contactTitle:"لديك سؤال؟",by:"CityFee من تطوير Digital Services SARL، نواكشوط، موريتانيا.",home:"كل إضافاتنا",tm:"WordPress وWooCommerce علامتان تجاريتان لمالكيهما.",title:"CityFee – قائمة المدن ورسوم التوصيل حسب المدينة لووكومرس"}
+};
+const EN={};document.querySelectorAll('[data-t]').forEach(e=>EN[e.dataset.t]=e.innerHTML);EN.title=document.title;T.en=EN;
+function setLang(l){const d=T[l]||EN;document.querySelectorAll('[data-t]').forEach(e=>{if(d[e.dataset.t])e.innerHTML=d[e.dataset.t]});document.title=d.title;document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));try{localStorage.setItem('lang',l)}catch(e){}}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+let saved;try{saved=localStorage.getItem('lang')}catch(e){}
+const nav=(navigator.language||'en').slice(0,2);setLang(saved||(T[nav]?nav:'en'));
+document.getElementById('y').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
