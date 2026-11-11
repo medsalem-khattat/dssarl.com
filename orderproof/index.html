@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrderProof – WhatsApp OTP verification for Cash on Delivery orders in WooCommerce</title>
+<meta name="description" content="OrderProof lets customers confirm Cash on Delivery orders with a one-time code on WhatsApp before you ship. Free on WordPress.org, Pro with a 7-day trial. By Digital Services SARL.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='white'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://dssarl.com/orderproof/">
+<meta property="og:title" content="OrderProof – WhatsApp OTP verification for Cash on Delivery orders">
+<meta property="og:description" content="Customers confirm Cash on Delivery orders with a one-time code on WhatsApp before you ship.">
+<meta property="og:url" content="https://dssarl.com/orderproof/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Kufi+Arabic:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8f7;--card:#fff;--ink:#14201d;--muted:#5b6b67;--line:#e3e8e6;--brand:#0f766e;--brand-ink:#fff;--soft:#e6f4f1}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1514;--card:#16201e;--ink:#e8efed;--muted:#9fb0ab;--line:#26332f;--brand:#2dd4bf;--brand-ink:#06201c;--soft:#15302b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+html[dir=rtl] body{font-family:"Noto Kufi Arabic",Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--ink)}
+.logo b{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand);color:var(--brand-ink);font-size:14px}
+.langs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.langs button{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;padding:4px 12px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink)}
+.hero{padding:48px 0 32px}
+.kicker{color:var(--brand);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+html[dir=rtl] .kicker{letter-spacing:0}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.15;margin:10px 0 16px;max-width:780px}
+.lead{color:var(--muted);font-size:18px;max-width:680px;margin:0 0 28px}
+.btn{display:inline-block;background:var(--brand);color:var(--brand-ink);padding:12px 20px;border-radius:10px;font-weight:600;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);margin-inline-start:8px}
+.note{color:var(--muted);font-size:14px;margin:12px 0 0}
+section{padding:32px 0}
+h2{font-size:26px;margin:0 0 18px}
+.values{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.values div{padding:18px;border-inline-start:3px solid var(--brand);background:var(--card);border-radius:10px}
+.values strong{display:block;margin-bottom:4px}
+.values span{color:var(--muted);font-size:15px}
+.steps{margin:0;padding-inline-start:22px;color:var(--muted);max-width:760px}
+.steps li{margin-bottom:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+table{width:100%;border-collapse:collapse;min-width:480px}
+th,td{padding:12px 16px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{font-size:14px;color:var(--muted);font-weight:600}
+td.c,th.c{text-align:center;width:90px}
+tr:last-child td{border-bottom:0}
+.yes{color:var(--brand);font-weight:800}
+.no{color:var(--muted)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px}
+.plan h3{margin:0 0 4px;font-size:18px}
+.price{font-size:36px;font-weight:800;margin:6px 0 2px}
+.price small{font-size:16px;font-weight:600;color:var(--muted)}
+.plan p{color:var(--muted);margin:0}
+.facts{margin:0;padding-inline-start:20px;color:var(--muted)}
+.contact{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted);font-size:14px}
+@media (max-width:560px){.btn.ghost{margin:10px 0 0}.hero{padding-top:24px}header{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="/"><b>DS</b><span>Digital Services SARL</span></a>
+  <nav class="langs" aria-label="Language">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="fr" aria-pressed="false">FR</button>
+    <button data-lang="ar" aria-pressed="false">ع</button>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <div class="kicker" data-t="kicker">WooCommerce plugin</div>
+  <h1>OrderProof</h1>
+  <p class="lead" data-t="lead">Customers confirm their Cash on Delivery orders with a one-time code on WhatsApp before you ship. No SMS: codes come from your own WhatsApp Business number.</p>
+  <a class="btn" href="https://wordpress.org/plugins/orderproof/" data-t="cta1">Get it free on WordPress.org</a><a class="btn ghost" href="https://checkout.freemius.com/plugin/43736/plan/76971/?trial=free" data-t="cta2">Start 7-day free trial</a>
+  <p class="note" data-t="ctaNote">No card needed for the trial.</p>
+</div>
+
+<section id="what">
+  <h2 data-t="whatTitle">What OrderProof does</h2>
+  <div class="values">
+    <div><strong data-t="w1t">WhatsApp OTP for COD orders</strong><span data-t="w1d">Codes are sent from your own WhatsApp Business number through Meta's WhatsApp Cloud API. No SMS gateway.</span></div>
+    <div><strong data-t="w2t">No per-message fee from us</strong><span data-t="w2d">OrderProof adds no per-message fee. Meta bills your WhatsApp Business account for each authentication message; prices depend on the customer's country.</span></div>
+    <div><strong data-t="w3t">Test mode</strong><span data-t="w3d">Try the whole flow before you connect WhatsApp: the code is shown on the verification page instead of being sent.</span></div>
+    <div><strong data-t="w4t">Limits and blacklist</strong><span data-t="w4d">Limit orders per phone number, and blacklist phone numbers, emails and IP addresses from the order page.</span></div>
+    <div><strong data-t="w5t">Customers in any country</strong><span data-t="w5d">Each phone number is read with the calling code of the customer's billing country.</span></div>
+    <div><strong data-t="w6t">Classic and block checkout</strong><span data-t="w6d">Works with the classic checkout and the Checkout block, with or without HPOS.</span></div>
+  </div>
+</section>
+
+<section id="how">
+  <h2 data-t="howTitle">How it works</h2>
+  <ol class="steps">
+    <li data-t="s1">A customer places a Cash on Delivery order.</li>
+    <li data-t="s2">The order waits in "Awaiting WhatsApp verification". It holds no stock and no "New order" email is sent yet.</li>
+    <li data-t="s3">The customer gets a 6-digit code on WhatsApp and types it on the verification page.</li>
+    <li data-t="s4">The order becomes a real order: stock is reserved and your usual emails go out.</li>
+    <li data-t="s5">Orders that are not verified are cancelled automatically after the number of hours you choose (2 by default).</li>
+  </ol>
+  <p class="note" data-t="needs">To send real codes you need your own WhatsApp Business number on Meta's WhatsApp Cloud API and an approved message template of the Authentication category. The settings page guides you step by step, and "Send test code" checks the setup.</p>
+</section>
+
+<section id="compare">
+  <h2 data-t="cmpTitle">Free and Pro</h2>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th data-t="cmpFeature">Feature</th><th class="c" data-t="cmpFree">Free</th><th class="c">Pro</th></tr></thead>
+    <tbody>
+      <tr><td data-t="f1">WhatsApp OTP verification for Cash on Delivery orders, from your own WhatsApp Business number</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f2">Test mode, setup guide and "Send test code"</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f3">Worldwide phone validation</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f4">Duplicate order limit per phone number</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f5">Blacklist of phone numbers, emails and IP addresses</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f6">Order statuses, including "Delivery refused" (restocks products); automatic cancelling of unverified orders</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f7">One-click WhatsApp confirmation message from the order page</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f8">Customer history on every order: delivered vs refused</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="f9">Classic checkout and Checkout block, HPOS compatible</td><td class="c yes">✓</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p1">Smart OTP: skip the WhatsApp code for trusted repeat customers</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p2">Risk score (0–100) on every order, and automatic blocking of high-risk customers</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p3">Auto-blacklist after a number of refused deliveries you choose</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p4">More WhatsApp templates: shipped, out for delivery…</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+      <tr><td data-t="p5">Delivery success-rate report</td><td class="c no">–</td><td class="c yes">✓</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note" data-t="freeNote">The free version is on <a href="https://wordpress.org/plugins/orderproof/">WordPress.org</a>.</p>
+</section>
+
+<section id="pricing">
+  <h2 data-t="priceTitle">OrderProof Pro pricing</h2>
+  <div class="plans">
+    <div class="card plan"><h3 data-t="plan1">1 site</h3><div class="price">$49 <small data-t="yr">/ year</small></div><p data-t="plan1d">For one store.</p></div>
+    <div class="card plan"><h3 data-t="plan5">5 sites</h3><div class="price">$99 <small data-t="yr">/ year</small></div><p data-t="plan5d">For up to five stores.</p></div>
+  </div>
+  <ul class="facts">
+    <li data-t="k1">7-day free trial, no card needed.</li>
+    <li data-t="k2">30-day refund if a bug can't be fixed.</li>
+    <li data-t="k3">WhatsApp messages are billed by Meta to your WhatsApp Business account, not by OrderProof.</li>
+  </ul>
+  <p style="margin-top:20px"><a class="btn" href="https://checkout.freemius.com/plugin/43736/plan/76971/?trial=free" data-t="cta2">Start 7-day free trial</a></p>
+</section>
+
+<section id="contact">
+  <div class="card contact">
+    <div>
+      <h2 data-t="contactTitle" style="margin-bottom:6px">Questions?</h2>
+      <p style="margin:0;color:var(--muted)" data-t="by">OrderProof is made by Digital Services SARL, Nouakchott, Mauritania. Free version users can also ask in the <a href="https://wordpress.org/support/plugin/orderproof/">WordPress.org support forum</a>.</p>
+    </div>
+    <a class="btn" href="mailto:contact@dssarl.com">contact@dssarl.com</a>
+  </div>
+</section>
+</main>
+
+<footer>© <span id="y">2026</span> Digital Services SARL · <a href="/" data-t="home">All our plugins</a> · <span data-t="tm">WordPress, WooCommerce and WhatsApp are trademarks of their respective owners.</span></footer>
+</div>
+
+<script>
+const T={
+ fr:{kicker:"Extension WooCommerce",lead:"Vos clients confirment leurs commandes en paiement à la livraison avec un code à usage unique reçu sur WhatsApp, avant l'expédition. Sans SMS : les codes partent de votre propre numéro WhatsApp Business.",cta1:"Gratuit sur WordPress.org",cta2:"Essai gratuit de 7 jours",ctaNote:"Aucune carte bancaire n'est demandée pour l'essai.",whatTitle:"Ce que fait OrderProof",w1t:"Code OTP WhatsApp pour le paiement à la livraison",w1d:"Les codes sont envoyés depuis votre propre numéro WhatsApp Business via l'API WhatsApp Cloud de Meta. Aucune passerelle SMS.",w2t:"Aucun frais par message de notre part",w2d:"OrderProof n'ajoute aucun frais par message. Meta facture votre compte WhatsApp Business pour chaque message d'authentification ; le prix dépend du pays du client.",w3t:"Mode test",w3d:"Essayez tout le parcours avant de connecter WhatsApp : le code s'affiche sur la page de vérification au lieu d'être envoyé.",w4t:"Limites et liste noire",w4d:"Limitez les commandes par numéro de téléphone et mettez en liste noire des numéros, e-mails et adresses IP depuis la page de commande.",w5t:"Clients de tous les pays",w5d:"Chaque numéro est lu avec l'indicatif du pays de facturation du client.",w6t:"Paiement classique et en blocs",w6d:"Fonctionne avec le paiement classique et le bloc Paiement, avec ou sans HPOS.",howTitle:"Comment ça marche",s1:"Un client passe une commande en paiement à la livraison.",s2:"La commande attend en « En attente de vérification WhatsApp ». Elle ne bloque aucun stock et l'e-mail « Nouvelle commande » n'est pas encore envoyé.",s3:"Le client reçoit un code à 6 chiffres sur WhatsApp et le saisit sur la page de vérification.",s4:"La commande devient une vraie commande : le stock est réservé et vos e-mails habituels partent.",s5:"Les commandes non vérifiées sont annulées automatiquement après le nombre d'heures que vous choisissez (2 par défaut).",needs:"Pour envoyer de vrais codes, il vous faut votre propre numéro WhatsApp Business sur l'API WhatsApp Cloud de Meta et un modèle de message approuvé de catégorie Authentification. La page de réglages vous guide pas à pas, et « Envoyer un code de test » vérifie la configuration.",cmpTitle:"Gratuit et Pro",cmpFeature:"Fonction",cmpFree:"Gratuit",f1:"Vérification OTP WhatsApp des commandes en paiement à la livraison, depuis votre propre numéro WhatsApp Business",f2:"Mode test, guide de configuration et « Envoyer un code de test »",f3:"Validation des numéros du monde entier",f4:"Limite de commandes en double par numéro de téléphone",f5:"Liste noire de numéros, e-mails et adresses IP",f6:"Statuts de commande, dont « Livraison refusée » (remet les produits en stock) ; annulation automatique des commandes non vérifiées",f7:"Message de confirmation WhatsApp en un clic depuis la page de commande",f8:"Historique client sur chaque commande : livrées et refusées",f9:"Paiement classique et bloc Paiement, compatible HPOS",p1:"OTP intelligent : pas de code WhatsApp pour les clients réguliers de confiance",p2:"Score de risque (0–100) sur chaque commande et blocage automatique des clients à risque élevé",p3:"Liste noire automatique après un nombre de livraisons refusées que vous choisissez",p4:"Plus de modèles WhatsApp : expédiée, en cours de livraison…",p5:"Rapport du taux de livraison réussie",freeNote:"La version gratuite est sur <a href=\"https://wordpress.org/plugins/orderproof/\">WordPress.org</a>.",priceTitle:"Tarifs d'OrderProof Pro",plan1:"1 site",plan5:"5 sites",yr:"/ an",plan1d:"Pour une boutique.",plan5d:"Jusqu'à cinq boutiques.",k1:"Essai gratuit de 7 jours, sans carte bancaire.",k2:"Remboursement sous 30 jours si un bug ne peut pas être corrigé.",k3:"Les messages WhatsApp sont facturés par Meta à votre compte WhatsApp Business, pas par OrderProof.",contactTitle:"Des questions ?",by:"OrderProof est conçu par Digital Services SARL, Nouakchott, Mauritanie. Les utilisateurs de la version gratuite peuvent aussi écrire sur le <a href=\"https://wordpress.org/support/plugin/orderproof/\">forum d'assistance WordPress.org</a>.",home:"Toutes nos extensions",tm:"WordPress, WooCommerce et WhatsApp sont des marques de leurs propriétaires respectifs.",title:"OrderProof – Vérification WhatsApp des commandes en paiement à la livraison pour WooCommerce"},
+ ar:{kicker:"إضافة ووكومرس",lead:"يؤكد عملاؤك طلبات الدفع عند الاستلام برمز يُستخدم مرة واحدة يصلهم على واتساب، قبل أن تشحن. بدون SMS: تُرسل الرموز من رقم واتساب للأعمال الخاص بك.",cta1:"احصل عليها مجانًا من WordPress.org",cta2:"ابدأ تجربة مجانية لمدة 7 أيام",ctaNote:"لا حاجة إلى بطاقة بنكية للتجربة.",whatTitle:"ماذا تفعل OrderProof",w1t:"رمز OTP عبر واتساب لطلبات الدفع عند الاستلام",w1d:"تُرسل الرموز من رقم واتساب للأعمال الخاص بك عبر WhatsApp Cloud API التابعة لـ Meta. بدون بوابة SMS.",w2t:"لا رسوم على الرسائل من طرفنا",w2d:"لا تضيف OrderProof أي رسوم على الرسائل. تُحاسب Meta حساب واتساب للأعمال الخاص بك على كل رسالة مصادقة، ويختلف السعر حسب دولة العميل.",w3t:"وضع الاختبار",w3d:"جرّب المسار كاملًا قبل ربط واتساب: يظهر الرمز في صفحة التحقق بدل إرساله.",w4t:"حدود وقائمة سوداء",w4d:"حدّد عدد الطلبات لكل رقم هاتف، وأضف أرقامًا وعناوين بريد وعناوين IP إلى القائمة السوداء من صفحة الطلب.",w5t:"عملاء من كل الدول",w5d:"يُقرأ كل رقم هاتف برمز الاتصال الخاص بدولة الفوترة للعميل.",w6t:"صفحة الدفع الكلاسيكية والمكتلة",w6d:"تعمل مع صفحة الدفع الكلاسيكية ومكتلة الدفع، مع HPOS أو بدونه.",howTitle:"كيف تعمل",s1:"يضع العميل طلبًا بالدفع عند الاستلام.",s2:"ينتظر الطلب بحالة «بانتظار التحقق عبر واتساب». لا يحجز أي مخزون ولا يُرسل بريد «طلب جديد» بعد.",s3:"يصل العميلَ رمز من 6 أرقام على واتساب فيكتبه في صفحة التحقق.",s4:"يصبح الطلب طلبًا فعليًا: يُحجز المخزون وتُرسل رسائلك المعتادة.",s5:"تُلغى الطلبات غير المؤكدة تلقائيًا بعد عدد الساعات الذي تختاره (ساعتان افتراضيًا).",needs:"لإرسال رموز حقيقية تحتاج إلى رقم واتساب للأعمال الخاص بك على WhatsApp Cloud API من Meta، وقالب رسالة معتمد من فئة المصادقة (Authentication). ترشدك صفحة الإعدادات خطوة بخطوة، وزر «إرسال رمز تجريبي» يتحقق من الإعداد.",cmpTitle:"المجانية و Pro",cmpFeature:"الميزة",cmpFree:"مجانية",f1:"تحقق برمز OTP عبر واتساب لطلبات الدفع عند الاستلام، من رقم واتساب للأعمال الخاص بك",f2:"وضع الاختبار ودليل الإعداد و«إرسال رمز تجريبي»",f3:"التحقق من أرقام الهاتف من كل الدول",f4:"حد للطلبات المكررة لكل رقم هاتف",f5:"قائمة سوداء لأرقام الهاتف وعناوين البريد وعناوين IP",f6:"حالات طلب منها «رفض الاستلام» (يعيد المنتجات إلى المخزون)؛ وإلغاء تلقائي للطلبات غير المؤكدة",f7:"رسالة تأكيد عبر واتساب بنقرة واحدة من صفحة الطلب",f8:"سجل العميل في كل طلب: طلبات مستلمة ومرفوضة",f9:"صفحة الدفع الكلاسيكية ومكتلة الدفع، متوافقة مع HPOS",p1:"OTP الذكي: تخطي رمز واتساب للعملاء المتكررين الموثوقين",p2:"درجة مخاطر (0–100) لكل طلب، وحظر تلقائي للعملاء ذوي المخاطر العالية",p3:"قائمة سوداء تلقائية بعد عدد من مرات رفض الاستلام تحدده أنت",p4:"قوالب واتساب إضافية: تم الشحن، في الطريق للتوصيل…",p5:"تقرير نسبة نجاح التوصيل",freeNote:"النسخة المجانية متوفرة على <a href=\"https://wordpress.org/plugins/orderproof/\">WordPress.org</a>.",priceTitle:"أسعار OrderProof Pro",plan1:"موقع واحد",plan5:"5 مواقع",yr:"/ سنة",plan1d:"لمتجر واحد.",plan5d:"حتى خمسة متاجر.",k1:"تجربة مجانية لمدة 7 أيام، بدون بطاقة بنكية.",k2:"استرداد المبلغ خلال 30 يومًا إذا تعذّر إصلاح خلل.",k3:"تُحاسب Meta حساب واتساب للأعمال الخاص بك على رسائل واتساب، وليس OrderProof.",contactTitle:"لديك سؤال؟",by:"OrderProof من تطوير Digital Services SARL، نواكشوط، موريتانيا. يمكن لمستخدمي النسخة المجانية أيضًا السؤال في <a href=\"https://wordpress.org/support/plugin/orderproof/\">منتدى الدعم على WordPress.org</a>.",home:"كل إضافاتنا",tm:"WordPress و WooCommerce و WhatsApp علامات تجارية لمالكيها.",title:"OrderProof – التحقق عبر واتساب من طلبات الدفع عند الاستلام في ووكومرس"}
+};
+const EN={};document.querySelectorAll('[data-t]').forEach(e=>EN[e.dataset.t]=e.innerHTML);EN.title=document.title;T.en=EN;
+function setLang(l){const d=T[l]||EN;document.querySelectorAll('[data-t]').forEach(e=>{if(d[e.dataset.t])e.innerHTML=d[e.dataset.t]});document.title=d.title;document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));try{localStorage.setItem('lang',l)}catch(e){}}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+let saved;try{saved=localStorage.getItem('lang')}catch(e){}
+const nav=(navigator.language||'en').slice(0,2);setLang(saved||(T[nav]?nav:'en'));
+document.getElementById('y').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
