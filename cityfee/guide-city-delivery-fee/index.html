@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>City dropdown and delivery fee per city in WooCommerce (works with the Checkout block)</title>
+<meta name="description" content="Step-by-step guide: replace the WooCommerce City field with a city dropdown and charge a delivery fee per city with the free CityFee plugin. Works in the classic checkout and the Checkout block.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='white'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://dssarl.com/cityfee/guide-city-delivery-fee/">
+<meta property="og:title" content="City dropdown and delivery fee per city in WooCommerce">
+<meta property="og:description" content="How to set up a city dropdown and a delivery fee per city in WooCommerce, including the Checkout block, with the free CityFee plugin.">
+<meta property="og:url" content="https://dssarl.com/cityfee/guide-city-delivery-fee/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Kufi+Arabic:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8f7;--card:#fff;--ink:#14201d;--muted:#5b6b67;--line:#e3e8e6;--brand:#0f766e;--brand-ink:#fff;--soft:#e6f4f1}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1514;--card:#16201e;--ink:#e8efed;--muted:#9fb0ab;--line:#26332f;--brand:#2dd4bf;--brand-ink:#06201c;--soft:#15302b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+html[dir=rtl] body{font-family:"Noto Kufi Arabic",Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--ink)}
+.logo b{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand);color:var(--brand-ink);font-size:14px}
+.langs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.langs button{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;padding:4px 12px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink)}
+.kicker{color:var(--brand);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin-top:28px}
+.kicker a{text-decoration:none}
+html[dir=rtl] .kicker{letter-spacing:0}
+.guide{max-width:800px;padding-bottom:16px}
+.guide[hidden]{display:none}
+h1{font-size:clamp(28px,4.4vw,44px);line-height:1.2;margin:10px 0 24px}
+h2{font-size:26px;line-height:1.3;margin:40px 0 14px}
+h3{font-size:20px;line-height:1.35;margin:32px 0 10px}
+.guide p,.guide li{overflow-wrap:break-word}
+.guide ul,.guide ol{padding-inline-start:22px}
+.guide li{margin-bottom:6px}
+.guide figure{margin:20px 0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.guide figure img{display:block;width:100%;height:auto}
+.guide figcaption{padding:10px 16px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+pre{direction:ltr;text-align:left;unicode-bidi:isolate;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;overflow-x:auto;font:15px/1.6 ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;margin:16px 0}
+.callout{background:var(--soft);border-inline-start:3px solid var(--brand);border-radius:10px;padding:14px 18px}
+.check{list-style:none;padding-inline-start:0}
+.check li{position:relative;padding-inline-start:30px;margin-bottom:8px}
+.check li::before{content:"";position:absolute;inset-inline-start:0;top:.25em;width:16px;height:16px;border:2px solid var(--brand);border-radius:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted);font-size:14px}
+@media (max-width:560px){header{flex-wrap:wrap}h2{font-size:22px}h3{font-size:18px}.kicker{margin-top:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="/"><b>DS</b><span>Digital Services SARL</span></a>
+  <nav class="langs" aria-label="Language">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="fr" aria-pressed="false">FR</button>
+    <button data-lang="ar" aria-pressed="false">ع</button>
+  </nav>
+</header>
+
+<main>
+<div class="kicker" data-t="kicker"><a href="/cityfee/">CityFee</a> · Guide</div>
+
+<!-- ===================== EN ===================== -->
+<article class="guide" data-lang="en" lang="en">
+<h1>City dropdown and delivery fee per city in WooCommerce (works with the Checkout block)</h1>
+
+<p><strong>Who this is for:</strong> stores where the courier charges by city, not by postcode. Typical for Cash on Delivery stores in Morocco, Algeria, Tunisia, Egypt, Mauritania, Pakistan, Nigeria and many other countries.</p>
+
+<p><strong>The problem:</strong> WooCommerce's City field is free text. Customers type the same city five different ways, and WooCommerce shipping zones match by country, region (state) and postcode, not by city. So the shipping cost cannot follow the city on its own.</p>
+
+<h2>Without a plugin: what WooCommerce can do</h2>
+<ul>
+<li>If each of your delivery areas has its own postcode, you can create one shipping zone per postcode range and give each zone a Flat rate. This works where postcodes are reliable.</li>
+<li>If your country has no postcodes, or towns share them, core WooCommerce has no city list and no fee per city.</li>
+</ul>
+
+<h2>With CityFee (free)</h2>
+<p>We are the developer of CityFee (Digital Services SARL). It is free on <a href="https://wordpress.org/plugins/cityfee/">WordPress.org</a> and works in the classic checkout and the Checkout block. No outside account is needed.</p>
+<p>When you open <strong>WooCommerce &gt; Settings &gt; Shipping &gt; Cities</strong>, a <strong>Quick start</strong> box sums up the three steps below (cities, shipping zone, test). It hides itself once the first two are done, or when you click <strong>Hide these steps</strong>.</p>
+
+<h3>Step 1. Choose your country</h3>
+<p>Go to <strong>WooCommerce &gt; Settings &gt; Shipping &gt; Cities</strong> and choose the country you deliver to. Turn on <strong>City dropdown at checkout</strong> for that country.</p>
+<figure><img src="screenshot-5.jpg" width="1092" height="1111" loading="lazy" alt="CityFee Cities screen: list of countries with the city dropdown and postcode settings, and the starter lists"></figure>
+<p>Note: for a country where the dropdown is on, the city list takes the place of the region (state) field. If you need both a region and a city, keep that country switched off.</p>
+
+<h3>Step 2. Load the starter list (or paste your own)</h3>
+<p>Click <strong>Load starter list</strong>. Lists of main cities, grouped by region, are included for 47 countries. You can load all regions or only the ones you deliver to. Names follow your site language (English, French or Arabic), with the other spelling shown next to them.</p>
+<figure><img src="screenshot-7.jpg" width="1200" height="678" loading="lazy" alt="CityFee country screen: dropdown and region settings, add form, paste box and the Load starter list button"></figure>
+<ul>
+<li>Check the list against your courier's list before going live. Remove or hide cities you don't serve.</li>
+<li>Your country is not in the 47? Paste your own list, one city per line, with the fee after a semicolon:</li>
+</ul>
+<pre dir="ltr"><code>Casablanca;30
+Rabat;35
+Tanger</code></pre>
+<p>A city without a fee uses the default fee (step 3). You can also paste two columns (city, fee) straight from a spreadsheet. Tick <strong>Check only (count without saving)</strong> to count the lines before saving.</p>
+<figure><img src="screenshot-4.jpg" width="1059" height="1148" loading="lazy" alt="Morocco starter list in CityFee: each city with its other spelling, region, code and fee"></figure>
+<p>Algeria: since CityFee 1.4.3 the starter list follows the 2026 division into 69 wilayas, with the names of the 11 new wilayas taken from the Journal officiel. If you loaded the Algeria list before, click <strong>Load starter list</strong> again: only the 11 new cities are added, and your existing cities and fees are kept.</p>
+
+<h3>Step 3. Add "Delivery by city" to your shipping zone (the step people miss)</h3>
+<p>Go to <strong>WooCommerce &gt; Settings &gt; Shipping</strong>, open the shipping zone that covers your country (create one if needed), and add the method <strong>Delivery by city</strong>, the same way you would add Flat rate. Set the <strong>Default fee</strong> for cities without their own fee.</p>
+<figure><img src="screenshot-6.jpg" width="1200" height="844" loading="lazy" alt="The Delivery by city shipping method in a WooCommerce shipping zone, with title, tax status and default fee"></figure>
+<p class="callout"><strong>If you skip this step, the city dropdown appears but the delivery fee stays at 0.</strong> This is the most common reason for "choosing a city doesn't change the shipping cost".</p>
+<p>If the same zone also has a Flat rate, customers will see both options. Remove or disable Flat rate if "Delivery by city" should be the only delivery price.</p>
+<p><strong>Cash on Delivery:</strong> check <strong>WooCommerce &gt; Settings &gt; Payments &gt; Cash on delivery &gt; "Enable for shipping methods"</strong>. When that list is not empty, Cash on Delivery is offered only with the methods in it. If it lists, for example, only Flat rate, Cash on Delivery is hidden in both the classic checkout and the Checkout block whenever the customer gets "Delivery by city". Fix: add <strong>Delivery by city</strong> to that list, or leave the list empty to offer Cash on Delivery with every shipping method. (This is also in the <a href="https://wordpress.org/plugins/cityfee/#faq">CityFee FAQ on WordPress.org</a>.)</p>
+
+<h3>Step 4. Test in the Checkout block</h3>
+<p>Open your shop in a private browser window, add a product to the cart and go to checkout.</p>
+<ol>
+<li>Choose the country. The City field becomes a dropdown.</li>
+<li>Pick a city. The delivery fee in the order summary should change to that city's fee.</li>
+<li>Pick a city without its own fee. You should see the default fee.</li>
+</ol>
+<figure><img src="screenshot-3.jpg" width="1200" height="1031" loading="lazy" alt="WooCommerce Checkout block with the CityFee city list and the delivery fee of the chosen city"></figure>
+<p>The fee updates as soon as the customer changes the city, in both the Checkout block and the classic checkout. The chosen city is saved in the order and the customer address, so emails, invoices and courier exports show a normal city name.</p>
+
+<h3>Step 5. Cities you don't deliver to</h3>
+<p>Mark a city <strong>Not delivered</strong>. It stays in the list, but "Delivery by city" offers no rate for it, so WooCommerce shows its usual "no shipping options" message, unless another method in the zone (for example Local pickup) is available.</p>
+
+<h3>Step 6. Long lists: group by region</h3>
+<p>If a country has many cities:</p>
+<ul>
+<li>Load only the regions you actually deliver to.</li>
+<li>Turn on <strong>Show the region next to the city at checkout</strong> for that country, so customers see "City – Region" and find their city faster.</li>
+<li>Keep the list short where you can. <strong>Above 300 cities, the Checkout block shows a plain dropdown without search</strong>, so customers must scroll. (The classic checkout list is searchable.) A country can have up to 2,000 cities.</li>
+</ul>
+<figure><img src="screenshot-8.jpg" width="1200" height="718" loading="lazy" alt="Checkout block showing the region next to the city (Casablanca – Casablanca-Settat) and its delivery fee"></figure>
+
+<h2>Quick checklist</h2>
+<ul class="check">
+<li>Country chosen, city dropdown on</li>
+<li>Starter list loaded or own list pasted, checked against the courier</li>
+<li><strong>"Delivery by city" added to the shipping zone, default fee set</strong></li>
+<li>Cash on Delivery: "Enable for shipping methods" includes "Delivery by city" or is empty</li>
+<li>Fee changes with the city in a test checkout</li>
+<li>Cities you don't serve marked "Not delivered"</li>
+<li>Long list: only your regions, region shown next to the city</li>
+</ul>
+
+<h2>Want more?</h2>
+<p>CityFee Pro (paid, by us) adds city groups with one fee per group, free delivery above a cart amount per city or group, hiding Cash on Delivery for selected cities, and CSV import and export. The free plugin works on its own. Details: <a href="/cityfee/">dssarl.com/cityfee</a>.</p>
+<p>Need help with setup? Ask in the <a href="https://wordpress.org/support/plugin/cityfee/">CityFee support forum on WordPress.org</a>.</p>
+</article>
+
+<!-- ===================== FR ===================== -->
+<article class="guide" data-lang="fr" lang="fr" hidden>
+<h1>Liste déroulante des villes et frais de livraison par ville sur WooCommerce (compatible avec le bloc Validation de commande)</h1>
+
+<p><strong>Pour qui :</strong> les boutiques dont le transporteur facture selon la ville, et non selon le code postal. C'est le cas de la plupart des boutiques en paiement à la livraison au Maroc, en Algérie, en Tunisie, en Égypte, en Mauritanie et ailleurs.</p>
+
+<p><strong>Le problème :</strong> dans WooCommerce, le champ Ville est un champ libre. Un même client peut écrire sa ville de cinq façons. Et les zones d'expédition de WooCommerce se basent sur le pays, la région (État) et le code postal, jamais sur la ville. Le prix de livraison ne peut donc pas suivre la ville tout seul.</p>
+
+<h2>Sans extension : ce que WooCommerce permet</h2>
+<ul>
+<li>Si chaque zone que vous livrez a son propre code postal, créez une zone d'expédition par plage de codes postaux, avec un « Forfait » (Flat rate) par zone. Cela marche là où les codes postaux sont fiables.</li>
+<li>Si votre pays n'utilise pas de codes postaux, ou si plusieurs villes partagent le même, WooCommerce seul n'offre ni liste de villes ni frais par ville.</li>
+</ul>
+
+<h2>Avec CityFee (gratuit)</h2>
+<p>Nous sommes l'éditeur de CityFee (Digital Services SARL). L'extension est gratuite sur <a href="https://wordpress.org/plugins/cityfee/">WordPress.org</a> et fonctionne avec la page de commande classique comme avec le bloc Validation de commande. Aucun compte externe n'est nécessaire.</p>
+<p>En ouvrant <strong>WooCommerce &gt; Réglages &gt; Expédition &gt; Villes</strong>, vous verrez un cadre <strong>« Démarrage rapide »</strong> qui résume les trois étapes ci-dessous (villes, zone d'expédition, test). Il disparaît de lui-même une fois les deux premières étapes faites, ou avec <strong>« Masquer ces étapes »</strong>.</p>
+
+<h3>Étape 1. Choisir le pays</h3>
+<p>Allez dans <strong>WooCommerce &gt; Réglages &gt; Expédition &gt; Villes</strong> (Settings &gt; Shipping &gt; Cities), choisissez le pays où vous livrez et activez <strong>« Liste de villes à la commande »</strong> (City dropdown at checkout) pour ce pays.</p>
+<figure><img src="screenshot-5.jpg" width="1092" height="1111" loading="lazy" alt="Écran Villes de CityFee : liste des pays avec les réglages de liste déroulante et de code postal, et les listes de départ"><figcaption>Les captures d'écran montrent l'interface en anglais.</figcaption></figure>
+<p>À savoir : pour un pays où la liste déroulante est activée, la liste des villes remplace le champ Région (État). Si vous avez besoin à la fois d'une région et d'une ville, laissez ce pays désactivé.</p>
+
+<h3>Étape 2. Charger la liste de départ (ou coller la vôtre)</h3>
+<p>Cliquez sur <strong>« Charger la liste de départ »</strong> (Load starter list). CityFee fournit les principales villes de 47 pays, classées par région. Vous pouvez tout charger ou seulement les régions que vous livrez. Les noms suivent la langue du site (français, anglais ou arabe), avec l'autre graphie affichée à côté.</p>
+<figure><img src="screenshot-7.jpg" width="1200" height="678" loading="lazy" alt="Écran d'un pays dans CityFee : réglages de liste et de région, formulaire d'ajout, zone de collage et bouton de chargement de la liste de départ"></figure>
+<ul>
+<li>Comparez la liste avec celle de votre transporteur avant de vous lancer. Masquez ou supprimez les villes que vous ne desservez pas.</li>
+<li>Votre pays ne fait pas partie des 47 ? Collez votre propre liste, une ville par ligne, avec le tarif après un point-virgule :</li>
+</ul>
+<pre dir="ltr"><code>Casablanca;30
+Rabat;35
+Tanger</code></pre>
+<p>Une ville sans tarif prend les frais par défaut (étape 3). Vous pouvez aussi coller deux colonnes (ville, tarif) copiées depuis un tableur. Cochez <strong>« Vérifier seulement (compter sans enregistrer) »</strong> (Check only) pour compter les lignes avant d'enregistrer.</p>
+<figure><img src="screenshot-4.jpg" width="1059" height="1148" loading="lazy" alt="Liste de départ du Maroc dans CityFee : chaque ville avec son autre graphie, sa région, son code et ses frais"></figure>
+<p>Algérie : depuis CityFee 1.4.3, la liste de départ suit le découpage de 2026 en 69 wilayas, avec les noms des 11 nouvelles wilayas tirés du Journal officiel. Si vous aviez déjà chargé la liste de l'Algérie, cliquez de nouveau sur <strong>« Charger la liste de départ »</strong> : seules les 11 nouvelles villes sont ajoutées, vos villes et vos frais existants sont conservés.</p>
+
+<h3>Étape 3. Ajouter « Livraison par ville » à la zone d'expédition (l'étape qu'on oublie)</h3>
+<p>Allez dans <strong>WooCommerce &gt; Réglages &gt; Expédition</strong> (Settings &gt; Shipping), ouvrez la zone d'expédition qui couvre votre pays (créez-la au besoin) et ajoutez le mode <strong>« Livraison par ville »</strong> (Delivery by city), comme vous ajouteriez un « Forfait ». Indiquez les <strong>« Frais par défaut »</strong> (Default fee) pour les villes sans frais propres.</p>
+<figure><img src="screenshot-6.jpg" width="1200" height="844" loading="lazy" alt="Le mode de livraison Delivery by city dans une zone d'expédition WooCommerce, avec titre, statut fiscal et frais par défaut"></figure>
+<p class="callout"><strong>Sans cette étape, la liste des villes s'affiche, mais les frais de livraison restent à 0.</strong> C'est la cause la plus fréquente du problème « le choix de la ville ne change pas le prix de livraison ».</p>
+<p>Si la même zone contient aussi un « Forfait », le client verra les deux options. Retirez ou désactivez le Forfait si la livraison par ville doit être le seul prix.</p>
+<p><strong>Paiement à la livraison :</strong> vérifiez <strong>WooCommerce &gt; Réglages &gt; Paiements &gt; Paiement à la livraison &gt; « Activer les mode d’expédition »</strong> (Settings &gt; Payments &gt; Cash on delivery &gt; Enable for shipping methods). Quand cette liste n'est pas vide, le paiement à la livraison n'est proposé qu'avec les modes qu'elle contient. Si elle ne contient par exemple que « Forfait », le paiement à la livraison est masqué, dans la page classique comme dans le bloc Validation de commande, dès que le client reçoit « Livraison par ville ». Solution : ajoutez <strong>« Livraison par ville »</strong> à cette liste, ou laissez-la vide pour proposer le paiement à la livraison avec tous les modes de livraison. (Ce point figure aussi dans la <a href="https://wordpress.org/plugins/cityfee/#faq">FAQ de CityFee sur WordPress.org</a>.)</p>
+
+<h3>Étape 4. Tester dans le bloc Validation de commande</h3>
+<p>Ouvrez votre boutique dans une fenêtre de navigation privée, ajoutez un produit au panier et allez à la commande.</p>
+<ol>
+<li>Choisissez le pays : le champ Ville devient une liste déroulante.</li>
+<li>Choisissez une ville : les frais de livraison du récapitulatif doivent prendre le tarif de cette ville.</li>
+<li>Choisissez une ville sans tarif propre : les frais par défaut doivent s'afficher.</li>
+</ol>
+<figure><img src="screenshot-3.jpg" width="1200" height="1031" loading="lazy" alt="Bloc Validation de commande de WooCommerce avec la liste des villes CityFee et les frais de livraison de la ville choisie"></figure>
+<p>Les frais se mettent à jour dès que le client change de ville, dans le bloc Validation de commande comme dans la page classique. La ville choisie est enregistrée dans la commande et dans l'adresse du client : e-mails, factures et exports pour le transporteur affichent un nom de ville propre.</p>
+
+<h3>Étape 5. Les villes que vous ne livrez pas</h3>
+<p>Marquez la ville <strong>« Non livrée »</strong> (Not delivered). Elle reste dans la liste, mais « Livraison par ville » ne propose aucun tarif pour elle. WooCommerce affiche alors son message habituel « aucune option de livraison », sauf si un autre mode de la zone (par exemple le retrait sur place) est disponible.</p>
+
+<h3>Étape 6. Longues listes : regrouper par région</h3>
+<p>Si le pays compte beaucoup de villes :</p>
+<ul>
+<li>Ne chargez que les régions que vous livrez vraiment.</li>
+<li>Activez <strong>« Afficher la région à côté de la ville au paiement »</strong> (Show the region next to the city at checkout) pour ce pays : le client voit « Ville – Région » et trouve sa ville plus vite.</li>
+<li>Gardez la liste courte quand c'est possible. <strong>Au-delà de 300 villes, le bloc Validation de commande affiche une liste simple, sans recherche</strong> : le client doit faire défiler. (La page de commande classique garde la recherche.) Un pays peut compter jusqu'à 2 000 villes.</li>
+</ul>
+<figure><img src="screenshot-8.jpg" width="1200" height="718" loading="lazy" alt="Bloc Validation de commande avec la région affichée à côté de la ville (Casablanca – Casablanca-Settat) et ses frais de livraison"></figure>
+
+<h2>Récapitulatif</h2>
+<ul class="check">
+<li>Pays choisi, « Liste de villes à la commande » activée</li>
+<li>Liste de départ chargée ou liste collée, vérifiée avec le transporteur</li>
+<li><strong>« Livraison par ville » ajoutée à la zone d'expédition, frais par défaut renseignés</strong></li>
+<li>Paiement à la livraison : « Activer les mode d’expédition » contient « Livraison par ville » ou reste vide</li>
+<li>Les frais changent avec la ville lors d'une commande test</li>
+<li>Villes non desservies marquées « Non livrée »</li>
+<li>Longue liste : seulement vos régions, région affichée à côté de la ville</li>
+</ul>
+
+<h2>Pour aller plus loin</h2>
+<p>CityFee Pro (payant, édité par nous) ajoute des groupes de villes avec un tarif par groupe, la livraison gratuite au-delà d'un montant de panier par ville ou par groupe, le masquage du paiement à la livraison pour certaines villes, et l'import/export CSV. La version gratuite fonctionne seule. Détails : <a href="/cityfee/">dssarl.com/cityfee</a>.</p>
+<p>Besoin d'aide pour la configuration ? Posez votre question sur le <a href="https://wordpress.org/support/plugin/cityfee/">forum d'assistance de CityFee sur WordPress.org</a>.</p>
+</article>
+
+<!-- ===================== AR ===================== -->
+<article class="guide" data-lang="ar" lang="ar" dir="rtl" hidden>
+<h1>قائمة المدن وسعر التوصيل حسب المدينة في ووكومرس (تعمل مع صفحة الدفع بالبلوكات)</h1>
+
+<p><strong>لمن هذا الدليل:</strong> للمتاجر التي تحسب فيها شركة التوصيل السعر حسب المدينة لا حسب الرمز البريدي، وهو حال أغلب متاجر الدفع عند الاستلام في المغرب والجزائر وتونس ومصر وموريتانيا وغيرها.</p>
+
+<p><strong>المشكلة:</strong> حقل "المدينة" في ووكومرس حقل نصي حر، فيكتب الزبائن المدينة نفسها بطرق مختلفة. ومناطق الشحن في ووكومرس تعتمد على الدولة والمنطقة (الولاية) والرمز البريدي، ولا تعتمد على المدينة. لذلك لا يتغيّر سعر التوصيل تلقائيًا حسب المدينة.</p>
+
+<h2>بدون إضافة: ما يتيحه ووكومرس</h2>
+<ul>
+<li>إذا كان لكل منطقة توصيل رمز بريدي خاص بها، يمكنك إنشاء منطقة شحن لكل مجموعة رموز بريدية، مع "سعر ثابت" (Flat rate) لكل منطقة. هذا يصلح حيث تكون الرموز البريدية دقيقة.</li>
+<li>أما إذا كانت بلدك لا تستعمل الرموز البريدية، أو كانت عدة مدن تشترك في رمز واحد، فووكومرس وحده لا يوفّر قائمة مدن ولا سعرًا لكل مدينة.</li>
+</ul>
+
+<h2>مع إضافة CityFee (مجانية)</h2>
+<p>نحن مطوّرو إضافة CityFee (شركة Digital Services SARL). الإضافة مجانية على <a href="https://wordpress.org/plugins/cityfee/">WordPress.org</a>، وتعمل في صفحة الدفع الكلاسيكية وفي صفحة الدفع بالبلوكات (Checkout block)، ولا تحتاج إلى أي حساب خارجي.</p>
+<p>عند فتح <strong>WooCommerce &gt; الإعدادات &gt; الشحن &gt; المدن</strong> يظهر مربع <strong>«بدء سريع»</strong> (Quick start) يلخّص الخطوات الثلاث التالية (المدن، منطقة الشحن، التجربة). يختفي تلقائيًا بعد إتمام الخطوتين الأوليين، أو عند الضغط على <strong>«إخفاء هذه الخطوات»</strong> (Hide these steps).</p>
+
+<h3>الخطوة 1: اختر الدولة</h3>
+<p>ادخل إلى <strong>WooCommerce &gt; الإعدادات &gt; الشحن &gt; المدن</strong> (Settings &gt; Shipping &gt; Cities)، واختر الدولة التي توصّل إليها، ثم فعّل <strong>«قائمة المدن عند إتمام الطلب»</strong> (City dropdown at checkout) لهذه الدولة.</p>
+<figure><img src="screenshot-5.jpg" width="1092" height="1111" loading="lazy" alt="شاشة المدن في CityFee: قائمة الدول مع إعدادات القائمة المنسدلة والرمز البريدي، والقوائم الجاهزة"><figcaption>تعرض لقطات الشاشة واجهة الإضافة باللغة الإنجليزية.</figcaption></figure>
+<p>ملاحظة: عند تفعيل القائمة لدولة ما، تحلّ قائمة المدن محلّ حقل المنطقة (الولاية). إذا كنت تحتاج إلى المنطقة والمدينة معًا، فاترك هذه الدولة غير مفعّلة.</p>
+
+<h3>الخطوة 2: حمّل القائمة الجاهزة (أو الصق قائمتك)</h3>
+<p>اضغط <strong>«تحميل القائمة الجاهزة»</strong> (Load starter list). تأتي الإضافة بقوائم المدن الرئيسية لـ 47 دولة، مرتّبة حسب المنطقة. يمكنك تحميل كل المناطق أو المناطق التي توصّل إليها فقط. تظهر الأسماء بلغة موقعك (العربية أو الفرنسية أو الإنجليزية) مع الكتابة الأخرى بجانبها.</p>
+<figure><img src="screenshot-7.jpg" width="1200" height="678" loading="lazy" alt="شاشة دولة في CityFee: إعدادات القائمة والمنطقة، ونموذج الإضافة، ومربع اللصق، وزر تحميل القائمة الجاهزة"></figure>
+<ul>
+<li>قارن القائمة بقائمة شركة التوصيل قبل البدء، وأخفِ أو احذف المدن التي لا توصّل إليها.</li>
+<li>دولتك ليست من بين الـ 47؟ الصق قائمتك: مدينة في كل سطر، والسعر بعد فاصلة منقوطة:</li>
+</ul>
+<pre dir="ltr" lang="en"><code>Casablanca;30
+Rabat;35
+Tanger</code></pre>
+<p>المدينة التي ليس لها سعر تأخذ الرسوم الافتراضية (الخطوة 3). ويمكنك أيضًا لصق عمودين (المدينة، السعر) من جدول بيانات مباشرة. فعّل <strong>«فحص فقط (العدّ دون حفظ)»</strong> (Check only) لعدّ الأسطر قبل الحفظ.</p>
+<figure><img src="screenshot-4.jpg" width="1059" height="1148" loading="lazy" alt="القائمة الجاهزة للمغرب في CityFee: كل مدينة مع كتابتها الأخرى ومنطقتها ورمزها وسعرها"></figure>
+<p>الجزائر: منذ النسخة 1.4.3 من CityFee، تتبع القائمة الجاهزة تقسيم 2026 إلى 69 ولاية، وأسماء الولايات الإحدى عشرة الجديدة مأخوذة من الجريدة الرسمية. إذا كنت قد حمّلت قائمة الجزائر من قبل، فاضغط <strong>«تحميل القائمة الجاهزة»</strong> مرة أخرى: تُضاف المدن الإحدى عشرة الجديدة فقط، وتبقى مدنك وأسعارك الحالية كما هي.</p>
+
+<h3>الخطوة 3: أضف طريقة «التوصيل حسب المدينة» إلى منطقة الشحن (الخطوة التي ينساها الكثيرون)</h3>
+<p>ادخل إلى <strong>WooCommerce &gt; الإعدادات &gt; الشحن</strong> (Settings &gt; Shipping)، وافتح منطقة الشحن التي تغطي دولتك (أو أنشئها)، ثم أضف طريقة <strong>«التوصيل حسب المدينة»</strong> (Delivery by city) كما تضيف «سعر ثابت». حدّد <strong>«الرسوم الافتراضية»</strong> (Default fee) للمدن التي ليس لها سعر خاص.</p>
+<figure><img src="screenshot-6.jpg" width="1200" height="844" loading="lazy" alt="طريقة الشحن Delivery by city في منطقة شحن ووكومرس، مع العنوان وحالة الضريبة والرسوم الافتراضية"></figure>
+<p class="callout"><strong>إذا تخطّيت هذه الخطوة، ستظهر قائمة المدن لكن سعر التوصيل يبقى صفرًا.</strong> وهذا هو السبب الأكثر شيوعًا لمشكلة "اختيار المدينة لا يغيّر سعر الشحن".</p>
+<p>إذا كانت المنطقة نفسها تحتوي أيضًا على «سعر ثابت»، فسيرى الزبون الخيارين معًا. احذف السعر الثابت أو عطّله إذا أردت أن يكون التوصيل حسب المدينة هو السعر الوحيد.</p>
+<p><strong>الدفع عند الاستلام:</strong> راجع <strong>WooCommerce &gt; الإعدادات &gt; المدفوعات &gt; الدفع نقدًا عند الاستلام &gt; «التفعيل فقط لطرق الشحن»</strong> (Settings &gt; Payments &gt; Cash on delivery &gt; Enable for shipping methods). إذا لم تكن هذه القائمة فارغة، فلا يُعرض الدفع عند الاستلام إلا مع طرق الشحن الموجودة فيها. فإذا كانت تحتوي مثلًا على «سعر ثابت» فقط، يختفي الدفع عند الاستلام في الصفحة الكلاسيكية وفي صفحة الدفع بالبلوكات كلما حصل الزبون على «التوصيل حسب المدينة». الحل: أضف <strong>«التوصيل حسب المدينة»</strong> إلى هذه القائمة، أو اتركها فارغة ليظهر الدفع عند الاستلام مع كل طرق الشحن. (هذه النقطة موجودة أيضًا في <a href="https://wordpress.org/plugins/cityfee/#faq">الأسئلة الشائعة لإضافة CityFee على WordPress.org</a>.)</p>
+
+<h3>الخطوة 4: جرّب في صفحة الدفع بالبلوكات</h3>
+<p>افتح متجرك في نافذة تصفّح خاصة، وأضف منتجًا إلى السلة، ثم انتقل إلى صفحة الدفع.</p>
+<ol>
+<li>اختر الدولة: يتحوّل حقل المدينة إلى قائمة منسدلة.</li>
+<li>اختر مدينة: يجب أن يتغيّر سعر التوصيل في ملخص الطلب إلى سعر هذه المدينة.</li>
+<li>اختر مدينة ليس لها سعر خاص: يجب أن تظهر الرسوم الافتراضية.</li>
+</ol>
+<figure><img src="screenshot-3.jpg" width="1200" height="1031" loading="lazy" alt="صفحة الدفع بالبلوكات في ووكومرس مع قائمة مدن CityFee وسعر توصيل المدينة المختارة"></figure>
+<p>يتحدّث السعر بمجرد أن يغيّر الزبون المدينة، في صفحة الدفع بالبلوكات والصفحة الكلاسيكية. وتُحفظ المدينة المختارة في الطلب وفي عنوان الزبون، فتظهر باسم موحّد في الرسائل والفواتير وملفات التصدير لشركة التوصيل.</p>
+
+<h3>الخطوة 5: المدن التي لا توصّل إليها</h3>
+<p>علّم المدينة بـ <strong>«لا يتم التوصيل»</strong> (Not delivered). تبقى المدينة في القائمة، لكن «التوصيل حسب المدينة» لا يعرض لها أي سعر، فيُظهر ووكومرس رسالته المعتادة بعدم وجود خيارات شحن، إلا إذا كانت في المنطقة طريقة أخرى متاحة (مثل الاستلام من المتجر).</p>
+
+<h3>الخطوة 6: القوائم الطويلة: التجميع حسب المنطقة</h3>
+<p>إذا كانت الدولة تضمّ مدنًا كثيرة:</p>
+<ul>
+<li>حمّل فقط المناطق التي توصّل إليها فعلًا.</li>
+<li>فعّل <strong>«إظهار المنطقة بجانب المدينة عند إتمام الطلب»</strong> (Show the region next to the city at checkout) لهذه الدولة، فيرى الزبون "المدينة – المنطقة" ويجد مدينته بسرعة.</li>
+<li>اجعل القائمة قصيرة قدر الإمكان. <strong>إذا تجاوزت 300 مدينة، تعرض صفحة الدفع بالبلوكات قائمة عادية بدون بحث</strong>، فيضطر الزبون إلى التمرير. (الصفحة الكلاسيكية تبقى قابلة للبحث.) الحدّ الأقصى 2000 مدينة لكل دولة.</li>
+</ul>
+<figure><img src="screenshot-8.jpg" width="1200" height="718" loading="lazy" alt="صفحة الدفع بالبلوكات مع المنطقة بجانب المدينة (Casablanca / الدار البيضاء – Casablanca-Settat) وسعر التوصيل"></figure>
+
+<h2>قائمة تحقق سريعة</h2>
+<ul class="check">
+<li>الدولة مختارة و«قائمة المدن عند إتمام الطلب» مفعّلة</li>
+<li>القائمة الجاهزة محمّلة أو قائمتك ملصقة، ومطابقة لقائمة شركة التوصيل</li>
+<li><strong>طريقة «التوصيل حسب المدينة» مضافة إلى منطقة الشحن، والرسوم الافتراضية محدّدة</strong></li>
+<li>الدفع عند الاستلام: «التفعيل فقط لطرق الشحن» تحتوي على «التوصيل حسب المدينة» أو فارغة</li>
+<li>السعر يتغيّر مع المدينة في طلب تجريبي</li>
+<li>المدن غير المخدومة معلّمة بـ «لا يتم التوصيل»</li>
+<li>القائمة الطويلة: مناطقك فقط، والمنطقة ظاهرة بجانب المدينة</li>
+</ul>
+
+<h2>للمزيد</h2>
+<p>نسخة CityFee Pro (مدفوعة، من تطويرنا) تضيف مجموعات مدن بسعر واحد لكل مجموعة، والتوصيل المجاني فوق مبلغ معيّن للسلة حسب المدينة أو المجموعة، وإخفاء الدفع عند الاستلام لمدن محدّدة، واستيراد وتصدير القوائم بصيغة CSV. النسخة المجانية تعمل وحدها. التفاصيل: <a href="/cityfee/" dir="ltr">dssarl.com/cityfee</a>.</p>
+<p>تحتاج مساعدة في الإعداد؟ اطرح سؤالك في <a href="https://wordpress.org/support/plugin/cityfee/">منتدى دعم CityFee على WordPress.org</a>.</p>
+</article>
+</main>
+
+<footer>© <span id="y">2026</span> Digital Services SARL · <a href="/" data-t="home">All our plugins</a> · <span data-t="tm">WordPress and WooCommerce are trademarks of their respective owners.</span></footer>
+</div>
+
+<script>
+const T={
+ fr:{kicker:"<a href=\"/cityfee/\">CityFee</a> · Guide",home:"Toutes nos extensions",tm:"WordPress et WooCommerce sont des marques de leurs propriétaires respectifs.",title:"Liste déroulante des villes et frais de livraison par ville sur WooCommerce (compatible avec le bloc Validation de commande)",desc:"Guide pas à pas : remplacer le champ Ville de WooCommerce par une liste déroulante des villes et appliquer des frais de livraison par ville avec l'extension gratuite CityFee. Page de commande classique et bloc Validation de commande."},
+ ar:{kicker:"دليل <a href=\"/cityfee/\">CityFee</a>",home:"كل إضافاتنا",tm:"WordPress وWooCommerce علامتان تجاريتان لمالكيهما.",title:"قائمة المدن وسعر التوصيل حسب المدينة في ووكومرس (تعمل مع صفحة الدفع بالبلوكات)",desc:"دليل خطوة بخطوة: استبدال حقل المدينة في ووكومرس بقائمة مدن وتحديد سعر توصيل لكل مدينة بإضافة CityFee المجانية. تعمل في صفحة الدفع الكلاسيكية وصفحة الدفع بالبلوكات."}
+};
+const md=document.querySelector('meta[name=description]');
+const EN={};document.querySelectorAll('[data-t]').forEach(e=>EN[e.dataset.t]=e.innerHTML);EN.title=document.title;EN.desc=md.content;T.en=EN;
+function setLang(l){if(!T[l])l='en';const d=T[l];document.querySelectorAll('[data-t]').forEach(e=>{if(d[e.dataset.t])e.innerHTML=d[e.dataset.t]});document.querySelectorAll('article[data-lang]').forEach(a=>a.hidden=a.dataset.lang!==l);document.title=d.title;md.content=d.desc;document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));try{localStorage.setItem('lang',l)}catch(e){}}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+let saved;try{saved=localStorage.getItem('lang')}catch(e){}
+const nav=(navigator.language||'en').slice(0,2);setLang(saved||(T[nav]?nav:'en'));
+document.getElementById('y').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
