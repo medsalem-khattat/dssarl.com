@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHP 8.2 end of life on 31 December 2026: check your WordPress plugins before your host upgrades you</title>
+<meta name="description" content="PHP 8.2 gets no more security fixes after 31 December 2026. The dates, a safe route to switch PHP on WordPress, how to find the plugin that breaks, and what to ask your host.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='white'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://dssarl.com/guides/php-8-2-end-of-life/">
+<meta property="og:title" content="PHP 8.2 end of life on 31 December 2026: check your WordPress plugins">
+<meta property="og:description" content="The PHP end-of-life dates, a safe route to switch PHP on WordPress, how to find the plugin that breaks, and what to ask your host.">
+<meta property="og:url" content="https://dssarl.com/guides/php-8-2-end-of-life/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8f7;--card:#fff;--ink:#14201d;--muted:#5b6b67;--line:#e3e8e6;--brand:#0f766e;--brand-ink:#fff;--soft:#e6f4f1}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1514;--card:#16201e;--ink:#e8efed;--muted:#9fb0ab;--line:#26332f;--brand:#2dd4bf;--brand-ink:#06201c;--soft:#15302b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--ink)}
+.logo b{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand);color:var(--brand-ink);font-size:14px}
+.langs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.langs button{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;padding:4px 12px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink)}
+.kicker{color:var(--brand);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin-top:28px}
+.guide{max-width:800px;padding-bottom:16px}
+.guide[hidden]{display:none}
+h1{font-size:clamp(28px,4.4vw,44px);line-height:1.2;margin:10px 0 24px}
+h2{font-size:26px;line-height:1.3;margin:40px 0 14px}
+.guide p,.guide li{overflow-wrap:break-word}
+.guide ul,.guide ol{padding-inline-start:22px}
+.guide li{margin-bottom:6px}
+code{font:.92em ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;background:var(--soft);padding:1px 5px;border-radius:5px;direction:ltr;unicode-bidi:isolate}
+pre{direction:ltr;text-align:left;unicode-bidi:isolate;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;overflow-x:auto;font:15px/1.6 ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;margin:16px 0}
+pre code{font:inherit;background:none;padding:0;border-radius:0}
+.tbl{overflow-x:auto;margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.tbl table{border-collapse:collapse;width:100%;min-width:320px}
+.tbl th,.tbl td{text-align:start;padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-size:14px;color:var(--muted);font-weight:600}
+.tbl tr:last-child td{border-bottom:0}
+.src{color:var(--muted);font-size:14px}
+.check{list-style:none;padding-inline-start:0}
+.check li{position:relative;padding-inline-start:30px;margin-bottom:8px}
+.check li::before{content:"";position:absolute;inset-inline-start:0;top:.25em;width:16px;height:16px;border:2px solid var(--brand);border-radius:4px}
+.note{color:var(--muted);font-size:14px;font-style:italic;margin-top:32px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted);font-size:14px}
+@media (max-width:560px){header{flex-wrap:wrap}h2{font-size:22px}.kicker{margin-top:12px}.tbl th,.tbl td{padding:8px 12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="/"><b>DS</b><span>Digital Services SARL</span></a>
+  <nav class="langs" aria-label="Language">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="fr" aria-pressed="false">FR</button>
+  </nav>
+</header>
+
+<main>
+<div class="kicker" data-t="kicker">Guide · PHP &amp; WordPress</div>
+
+<!-- ===================== EN ===================== -->
+<article class="guide" data-lang="en" lang="en">
+<h1>PHP 8.2 reaches end of life on 31 December 2026: check your WordPress plugins before your host upgrades you</h1>
+
+<h2>1. What "end of life" means, and the dates</h2>
+<p>When a PHP version reaches end of life, it gets no more security fixes. Hosts then move sites to a newer version, sometimes on their own schedule; some offer paid extended support instead.</p>
+<div class="tbl"><table>
+<thead><tr><th scope="col">PHP version</th><th scope="col">Security fixes until</th></tr></thead>
+<tbody>
+<tr><td>8.1</td><td>ended 31 Dec 2025</td></tr>
+<tr><td><strong>8.2</strong></td><td><strong>31 Dec 2026</strong></td></tr>
+<tr><td>8.3</td><td>31 Dec 2027</td></tr>
+<tr><td>8.4</td><td>31 Dec 2028</td></tr>
+<tr><td>8.5</td><td>31 Dec 2029</td></tr>
+<tr><td>8.6</td><td>31 Dec 2030 (released 19 Nov 2026)</td></tr>
+</tbody>
+</table></div>
+<p class="src">Source: php.net, "<a href="https://www.php.net/supported-versions.php">Supported Versions</a>" and "<a href="https://www.php.net/eol.php">Unsupported Branches</a>" pages, checked 21 Nov 2026.</p>
+<p>If your site runs PHP 8.2 or older, plan the move now. Moving to 8.3 gives you security fixes until the end of 2027; 8.4 or 8.5 gives you longer. Check that your WordPress version supports the target: on 21 Nov 2026, the WordPress core handbook ("<a href="https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/">PHP Compatibility and WordPress Versions</a>") lists PHP 7.4 to 8.5 as supported for WordPress 7.0 and 7.1. PHP 8.6 is not yet listed there.</p>
+<p>Your PHP version is shown in <strong>Tools &gt; Site Health &gt; Info &gt; Server</strong>.</p>
+
+<h2>2. The safe route</h2>
+<ol>
+<li><strong>Back up</strong> files and database, and make sure you know how to restore.</li>
+<li><strong>Update first</strong>: WordPress, all plugins, all themes. Many PHP problems are already fixed in newer plugin versions.</li>
+<li><strong>Use a staging copy</strong> if your host offers one (some hosting panels have a one-click staging site).</li>
+<li><strong>Switch the PHP version</strong> on staging in your hosting panel (often under "PHP version", "PHP selector" or "PHP configuration").</li>
+<li><strong>Test what matters</strong>: home page, a product page, cart, checkout with a test order, contact form, the admin screens you use daily.</li>
+<li><strong>Read the error log</strong> (see below).</li>
+<li><strong>If something breaks, switch back</strong> to the previous version in the hosting panel. Then fix the cause and try again.</li>
+<li>When staging is clean, do the same on the live site at a quiet hour, and keep the backup.</li>
+</ol>
+<p><strong>Turn on the WordPress error log (staging).</strong> Add these lines to <code>wp-config.php</code>, above "That's all, stop editing":</p>
+<pre dir="ltr"><code>define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );</code></pre>
+<p>Errors are written to <code>wp-content/debug.log</code> and are not shown to visitors. Remove the lines (or set them to <code>false</code>) when you are done. Your host may also show a PHP error log in the panel.</p>
+
+<h2>3. How to find the plugin that breaks</h2>
+<p><strong>Read the error.</strong> A fatal error message or log line shows a file path. The folder after <code>wp-content/plugins/</code> (or <code>wp-content/themes/</code>) is the culprit. WordPress also emails the site admin a link to <strong>recovery mode</strong>, which lets you log in with the faulty plugin paused.</p>
+<p><strong>Deactivate and test.</strong> On staging, deactivate all plugins, then reactivate them one by one, testing after each. No access to the admin? Rename the plugin's folder in <code>wp-content/plugins/</code> with your host's file manager or FTP; WordPress then treats it as deactivated.</p>
+<p><strong>Scan before you switch.</strong> A PHP compatibility scanner reads the code of your plugins and themes, without running it, and lists the lines likely to cause errors or deprecation notices on the PHP version you choose. It helps you see problems before you switch, and tells you which plugin authors to contact.</p>
+<p>How to choose one:</p>
+<ul>
+<li><strong>It supports the PHP versions you need</strong>, including 8.3, 8.4 and 8.5. Some older scanners stop at PHP 8.0; check the supported versions on the plugin's page.</li>
+<li><strong>It scans plugins and themes, including premium ones</strong>, on your own server (a local scan), so code you bought is checked too.</li>
+<li><strong>It does not hang on shared hosting</strong>: look for scans that run in steps or in the background rather than in one long request.</li>
+<li><strong>It is recently updated</strong> and tested with your WordPress version.</li>
+<li><strong>Read the plugin's own page</strong> (description, requirements, FAQ) before installing, and run it on staging first.</li>
+</ul>
+<p>How to find them: in your WordPress admin, go to <strong>Plugins &gt; Add Plugin</strong> and search for "PHP compatibility". Developers can also run a static analysis tool with PHP compatibility rules from the command line.</p>
+<p><strong>Every scanner has limits.</strong> Static scanners read code without running it. They can miss problems that only appear at run time (code built on the fly, encoded files, missing PHP extensions, server settings), and they can flag code that never runs on your site. A clean report is a good sign, not a guarantee. Always test on staging too.</p>
+
+<h2>4. Deprecated vs Fatal, in 5 lines</h2>
+<ul>
+<li><strong>Fatal error</strong>: PHP stops. The page shows "There has been a critical error on this website" or goes blank. Fix it before switching.</li>
+<li><strong>Deprecated</strong>: the code still works on this version but will stop working in a future one. The site runs normally.</li>
+<li><strong>Warning / Notice</strong>: something unexpected, the page usually still loads. Worth fixing, rarely urgent.</li>
+<li>A <code>debug.log</code> full of "Deprecated" lines (for example about dynamic properties) is common after an upgrade and does not mean the site is broken.</li>
+<li>What to do: update the plugin; if there is no update, send the log line to its author; if the plugin is abandoned, replace it.</li>
+</ul>
+
+<h2>5. What to ask your host</h2>
+<ul>
+<li>Which PHP version will you move my site to, and on what date? Will you do it automatically?</li>
+<li>Can I switch PHP myself in the panel, and switch back if something breaks? Until when?</li>
+<li>Do you offer paid extended support for old PHP versions, and what does it cost?</li>
+<li>Do I have a staging site? How do I create one?</li>
+<li>Where can I see the PHP error log?</li>
+<li>How do I restore a backup, and how far back do backups go?</li>
+</ul>
+
+<h2>Quick checklist</h2>
+<ul class="check">
+<li>Current PHP version noted (Site Health)</li>
+<li>Backup done, restore tested or known</li>
+<li>WordPress, plugins and themes updated</li>
+<li>Scan run, errors reviewed (warnings later)</li>
+<li>Staging switched and tested, error log read</li>
+<li>Live site switched; you know how to switch back</li>
+</ul>
+
+<p class="note">Digital Services SARL is not affiliated with The PHP Group or WordPress.org. Dates and version support are taken from php.net and the WordPress core handbook on 21 Nov 2026 and may change.</p>
+</article>
+
+<!-- ===================== FR ===================== -->
+<article class="guide" data-lang="fr" lang="fr" hidden>
+<h1>Fin de vie de PHP 8.2 le 31 décembre 2026 : vérifiez vos extensions WordPress avant que votre hébergeur ne change de version</h1>
+
+<h2>1. Ce que veut dire « fin de vie », et les dates</h2>
+<p>Quand une version de PHP arrive en fin de vie, elle ne reçoit plus de correctifs de sécurité. Les hébergeurs migrent alors les sites vers une version plus récente, parfois selon leur propre calendrier ; certains proposent à la place un support prolongé payant.</p>
+<div class="tbl"><table>
+<thead><tr><th scope="col">Version de PHP</th><th scope="col">Correctifs de sécurité jusqu'au</th></tr></thead>
+<tbody>
+<tr><td>8.1</td><td>terminé le 31 déc. 2025</td></tr>
+<tr><td><strong>8.2</strong></td><td><strong>31 déc. 2026</strong></td></tr>
+<tr><td>8.3</td><td>31 déc. 2027</td></tr>
+<tr><td>8.4</td><td>31 déc. 2028</td></tr>
+<tr><td>8.5</td><td>31 déc. 2029</td></tr>
+<tr><td>8.6</td><td>31 déc. 2030 (sortie le 19 nov. 2026)</td></tr>
+</tbody>
+</table></div>
+<p class="src">Source : php.net, pages « <a href="https://www.php.net/supported-versions.php">Supported Versions</a> » et « <a href="https://www.php.net/eol.php">Unsupported Branches</a> », consultées le 21 nov. 2026.</p>
+<p>Si votre site tourne en PHP 8.2 ou plus ancien, préparez la migration dès maintenant. Passer en 8.3 vous assure des correctifs de sécurité jusqu'à fin 2027 ; 8.4 ou 8.5 vous donnent plus de marge. Vérifiez que votre version de WordPress supporte la cible : au 21 nov. 2026, le manuel WordPress (« <a href="https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/">PHP Compatibility and WordPress Versions</a> ») indique PHP 7.4 à 8.5 comme supportés pour WordPress 7.0 et 7.1. PHP 8.6 n'y figure pas encore.</p>
+<p>Votre version de PHP s'affiche dans <strong>Outils &gt; Santé du site &gt; Informations &gt; Serveur</strong>.</p>
+
+<h2>2. La méthode sûre</h2>
+<ol>
+<li><strong>Sauvegardez</strong> fichiers et base de données, et sachez comment restaurer.</li>
+<li><strong>Mettez à jour d'abord</strong> WordPress, toutes les extensions et tous les thèmes. Beaucoup de problèmes PHP sont déjà corrigés dans les versions récentes.</li>
+<li><strong>Travaillez sur une copie de test (staging)</strong> si votre hébergeur en propose une (certains panneaux la créent en un clic).</li>
+<li><strong>Changez la version de PHP</strong> de la copie de test dans le panneau d'hébergement (souvent « Version PHP », « Sélecteur PHP » ou « Configuration PHP »).</li>
+<li><strong>Testez l'essentiel</strong> : accueil, une fiche produit, le panier, une commande test, le formulaire de contact, les écrans d'admin que vous utilisez chaque jour.</li>
+<li><strong>Lisez le journal d'erreurs</strong> (voir ci-dessous).</li>
+<li><strong>En cas de panne, revenez à l'ancienne version</strong> dans le panneau d'hébergement. Corrigez la cause, puis réessayez.</li>
+<li>Quand la copie de test est propre, faites la même chose sur le site en ligne, à une heure calme, en gardant la sauvegarde.</li>
+</ol>
+<p><strong>Activer le journal d'erreurs WordPress (sur la copie de test).</strong> Ajoutez ces lignes dans <code>wp-config.php</code>, au-dessus de « C'est tout, ne touchez pas à ce qui suit » :</p>
+<pre dir="ltr"><code>define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );</code></pre>
+<p>Les erreurs sont écrites dans <code>wp-content/debug.log</code>, sans être affichées aux visiteurs. Retirez ces lignes (ou passez-les à <code>false</code>) une fois terminé. Votre hébergeur affiche peut-être aussi un journal d'erreurs PHP dans le panneau.</p>
+
+<h2>3. Trouver l'extension qui casse le site</h2>
+<p><strong>Lisez l'erreur.</strong> Le message d'erreur fatale, ou la ligne du journal, contient un chemin de fichier. Le dossier qui suit <code>wp-content/plugins/</code> (ou <code>wp-content/themes/</code>) est le coupable. WordPress envoie aussi à l'administrateur un e-mail avec un lien vers le <strong>mode de récupération</strong>, qui permet de se connecter avec l'extension fautive mise en pause.</p>
+<p><strong>Désactivez et testez.</strong> Sur la copie de test, désactivez toutes les extensions, puis réactivez-les une par une en testant à chaque fois. Plus d'accès à l'admin ? Renommez le dossier de l'extension dans <code>wp-content/plugins/</code> avec le gestionnaire de fichiers de l'hébergeur ou en FTP : WordPress la considère alors comme désactivée.</p>
+<p><strong>Analysez avant de changer de version.</strong> Un scanner de compatibilité PHP lit le code de vos extensions et thèmes, sans l'exécuter, et liste les lignes susceptibles de provoquer des erreurs ou des avertissements « Deprecated » sur la version de PHP choisie. Il vous montre les problèmes avant le changement et vous indique quels auteurs d'extensions contacter.</p>
+<p>Comment en choisir un :</p>
+<ul>
+<li><strong>Il prend en charge les versions de PHP dont vous avez besoin</strong>, y compris 8.3, 8.4 et 8.5. Certains scanners anciens s'arrêtent à PHP 8.0 : vérifiez les versions prises en charge sur la fiche de l'extension.</li>
+<li><strong>Il analyse les extensions et les thèmes, y compris premium</strong>, sur votre propre serveur (analyse locale), pour que le code acheté soit vérifié aussi.</li>
+<li><strong>Il ne bloque pas sur un hébergement mutualisé</strong> : privilégiez une analyse par étapes ou en arrière-plan plutôt qu'en une seule longue requête.</li>
+<li><strong>Il est mis à jour récemment</strong> et testé avec votre version de WordPress.</li>
+<li><strong>Lisez la fiche de l'extension</strong> (description, prérequis, FAQ) avant de l'installer, et lancez-la d'abord sur la copie de test.</li>
+</ul>
+<p>Où les trouver : dans l'admin WordPress, allez dans <strong>Extensions &gt; Ajouter une extension</strong> et cherchez « PHP compatibility ». Les développeurs peuvent aussi lancer en ligne de commande un outil d'analyse statique avec des règles de compatibilité PHP.</p>
+<p><strong>Tout scanner a ses limites.</strong> Un scanner statique lit le code sans l'exécuter. Il peut rater des problèmes qui n'apparaissent qu'à l'exécution (code généré à la volée, fichiers chiffrés, extension PHP manquante, réglages du serveur) et signaler du code qui ne tourne jamais sur votre site. Un rapport propre est bon signe, pas une garantie. Testez toujours aussi sur une copie de test.</p>
+
+<h2>4. « Deprecated » ou erreur fatale, en 5 lignes</h2>
+<ul>
+<li><strong>Erreur fatale (Fatal error)</strong> : PHP s'arrête. La page affiche « Il y a eu une erreur critique sur ce site » ou reste blanche. À corriger avant de changer de version.</li>
+<li><strong>Deprecated (obsolète)</strong> : le code fonctionne encore sur cette version mais cessera de fonctionner dans une version future. Le site tourne normalement.</li>
+<li><strong>Warning / Notice (avertissement)</strong> : quelque chose d'inattendu, la page se charge en général. À corriger, rarement urgent.</li>
+<li>Un <code>debug.log</code> rempli de lignes « Deprecated » (par exemple sur les propriétés dynamiques) est courant après une mise à jour de PHP et ne veut pas dire que le site est cassé.</li>
+<li>Que faire : mettre à jour l'extension ; s'il n'y a pas de mise à jour, envoyer la ligne du journal à son auteur ; si l'extension est abandonnée, la remplacer.</li>
+</ul>
+
+<h2>5. Les questions à poser à votre hébergeur</h2>
+<ul>
+<li>Vers quelle version de PHP allez-vous migrer mon site, et à quelle date ? Le ferez-vous automatiquement ?</li>
+<li>Puis-je changer de version moi-même dans le panneau, et revenir en arrière en cas de problème ? Jusqu'à quand ?</li>
+<li>Proposez-vous un support prolongé payant pour les anciennes versions, et à quel prix ?</li>
+<li>Ai-je droit à un site de test (staging) ? Comment le créer ?</li>
+<li>Où voir le journal d'erreurs PHP ?</li>
+<li>Comment restaurer une sauvegarde, et jusqu'à quelle date remontent-elles ?</li>
+</ul>
+
+<h2>Récapitulatif</h2>
+<ul class="check">
+<li>Version de PHP actuelle notée (Santé du site)</li>
+<li>Sauvegarde faite, restauration testée ou connue</li>
+<li>WordPress, extensions et thèmes à jour</li>
+<li>Analyse faite, erreurs examinées (avertissements plus tard)</li>
+<li>Copie de test passée sur la nouvelle version et testée, journal lu</li>
+<li>Site en ligne migré ; vous savez comment revenir en arrière</li>
+</ul>
+
+<p class="note">Digital Services SARL n'est affiliée ni à The PHP Group ni à WordPress.org. Dates et versions supportées relevées sur php.net et dans le manuel WordPress le 21 nov. 2026 ; elles peuvent évoluer.</p>
+</article>
+</main>
+
+<footer>© <span id="y">2026</span> Digital Services SARL · <a href="/" data-t="home">All our plugins</a> · <span data-t="tm">PHP and WordPress are trademarks of their respective owners.</span></footer>
+</div>
+
+<script>
+const T={
+ fr:{kicker:"Guide · PHP &amp; WordPress",home:"Toutes nos extensions",tm:"PHP et WordPress sont des marques de leurs propriétaires respectifs.",title:"Fin de vie de PHP 8.2 le 31 décembre 2026 : vérifiez vos extensions WordPress avant que votre hébergeur ne change de version",desc:"PHP 8.2 ne reçoit plus de correctifs de sécurité après le 31 décembre 2026. Les dates, la méthode sûre pour changer de version de PHP sur WordPress, comment trouver l'extension qui casse le site, et les questions à poser à votre hébergeur."}
+};
+const md=document.querySelector('meta[name=description]');
+const EN={};document.querySelectorAll('[data-t]').forEach(e=>EN[e.dataset.t]=e.innerHTML);EN.title=document.title;EN.desc=md.content;T.en=EN;
+// This page exists in EN and FR only: an unavailable language falls back to EN without overwriting the visitor's saved choice.
+function setLang(l,keep){if(!T[l]){l='en';keep=true}const d=T[l];document.querySelectorAll('[data-t]').forEach(e=>{if(d[e.dataset.t])e.innerHTML=d[e.dataset.t]});document.querySelectorAll('article[data-lang]').forEach(a=>a.hidden=a.dataset.lang!==l);document.title=d.title;md.content=d.desc;document.documentElement.lang=l;document.documentElement.dir='ltr';document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));if(!keep){try{localStorage.setItem('lang',l)}catch(e){}}}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+let saved;try{saved=localStorage.getItem('lang')}catch(e){}
+const nav=(navigator.language||'en').slice(0,2);setLang(saved||(T[nav]?nav:'en'),true);
+document.getElementById('y').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
