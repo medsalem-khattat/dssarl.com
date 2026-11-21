@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to stop fake Cash on Delivery orders in WooCommerce</title>
+<meta name="description" content="Free steps in WooCommerce to stop fake Cash on Delivery orders: CAPTCHA, required phone in the Checkout block, COD only where you collect cash, confirmation before shipping. Then what the free OrderProof plugin adds.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='white'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://dssarl.com/orderproof/guide-fake-cod-orders/">
+<meta property="og:title" content="How to stop fake Cash on Delivery orders in WooCommerce">
+<meta property="og:description" content="Free WooCommerce steps against fake Cash on Delivery orders, then what the free OrderProof plugin adds, with or without a Meta account.">
+<meta property="og:url" content="https://dssarl.com/orderproof/guide-fake-cod-orders/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Kufi+Arabic:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8f7;--card:#fff;--ink:#14201d;--muted:#5b6b67;--line:#e3e8e6;--brand:#0f766e;--brand-ink:#fff;--soft:#e6f4f1}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1514;--card:#16201e;--ink:#e8efed;--muted:#9fb0ab;--line:#26332f;--brand:#2dd4bf;--brand-ink:#06201c;--soft:#15302b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+html[dir=rtl] body{font-family:"Noto Kufi Arabic",Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--ink)}
+.logo b{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand);color:var(--brand-ink);font-size:14px}
+.langs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.langs button{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;padding:4px 12px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink)}
+.kicker{color:var(--brand);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin-top:28px}
+.kicker a{text-decoration:none}
+html[dir=rtl] .kicker{letter-spacing:0}
+.guide{max-width:800px;padding-bottom:16px}
+.guide[hidden]{display:none}
+h1{font-size:clamp(28px,4.4vw,44px);line-height:1.2;margin:10px 0 24px}
+h2{font-size:26px;line-height:1.3;margin:40px 0 14px}
+h3{font-size:20px;line-height:1.35;margin:32px 0 10px}
+.guide p,.guide li,.guide td{overflow-wrap:break-word}
+.guide ul,.guide ol{padding-inline-start:22px}
+.guide li{margin-bottom:6px}
+.guide figure{margin:20px 0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.guide figure img{display:block;width:100%;height:auto}
+.guide figcaption{padding:10px 16px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+.tbl{overflow-x:auto;margin:16px 0;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.tbl table{border-collapse:collapse;width:100%;min-width:320px}
+.tbl th,.tbl td{text-align:start;padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-size:14px;color:var(--muted);font-weight:600}
+.tbl tr:last-child td{border-bottom:0}
+.callout{background:var(--soft);border-inline-start:3px solid var(--brand);border-radius:10px;padding:14px 18px}
+.check{list-style:none;padding-inline-start:0}
+.check li{position:relative;padding-inline-start:30px;margin-bottom:8px}
+.check li::before{content:"";position:absolute;inset-inline-start:0;top:.25em;width:16px;height:16px;border:2px solid var(--brand);border-radius:4px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted);font-size:14px}
+@media (max-width:560px){header{flex-wrap:wrap}h2{font-size:22px}h3{font-size:18px}.kicker{margin-top:12px}.tbl th,.tbl td{padding:8px 10px;font-size:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="/"><b>DS</b><span>Digital Services SARL</span></a>
+  <nav class="langs" aria-label="Language">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="fr" aria-pressed="false">FR</button>
+    <button data-lang="ar" aria-pressed="false">ع</button>
+  </nav>
+</header>
+
+<main>
+<div class="kicker" data-t="kicker"><a href="/orderproof/">OrderProof</a> · Guide</div>
+
+<!-- ===================== EN ===================== -->
+<article class="guide" data-lang="en" lang="en">
+<h1>How to stop fake Cash on Delivery orders in WooCommerce</h1>
+
+<p>Fake COD orders cost you twice: the courier charges you to deliver and often again to return the parcel, and the stock sits in a van for days. There is no single switch that stops them. Below are the free steps in WooCommerce first, then what our plugin OrderProof adds.</p>
+
+<p><strong>First, know which kind of "fake order" you have.</strong> They need different fixes:</p>
+
+<div class="tbl"><table>
+<thead><tr><th scope="col">What you see</th><th scope="col">Likely cause</th><th scope="col">Main fix</th></tr></thead>
+<tbody>
+<tr><td>Dozens of orders in minutes, random names and emails, often the same cheap product, often card payments</td><td>Bots or card testing</td><td>A CAPTCHA, a firewall, your payment gateway's fraud settings (step 1)</td></tr>
+<tr><td>Real-looking COD orders that are refused at the door, or the phone never answers</td><td>People ordering without intent to pay, pranks, competitors</td><td>Phone checks, confirmation before shipping, blocking repeat refusers (steps 2 to 5, then OrderProof)</td></tr>
+</tbody>
+</table></div>
+
+<h2>Free steps in WooCommerce (no extra plugin needed, except step 1)</h2>
+
+<h3>1. Stop bots with a CAPTCHA</h3>
+<p>Add a CAPTCHA (for example Turnstile or reCAPTCHA) to your checkout. Several free plugins do this. Choose one that says it supports the <strong>Checkout block</strong> if your store uses it. A CAPTCHA, together with your payment gateway's own fraud settings, is also the usual answer to card-testing attacks on online card payments. Ask your host whether a firewall is active too.</p>
+
+<h3>2. Make the phone number required in the Checkout block</h3>
+<p>In the Checkout block, the phone field is <strong>optional by default</strong>. To change it in WooCommerce:</p>
+<ol>
+<li>Go to <strong>Pages</strong> and open your <strong>Checkout</strong> page with <strong>Edit</strong>.</li>
+<li>Select the <strong>Checkout</strong> block (or its <strong>Billing Address</strong> or <strong>Shipping Address</strong> block).</li>
+<li>In <strong>Block settings</strong>, under <strong>Address Fields</strong>, turn <strong>Phone</strong> on and set it to <strong>Required</strong>.</li>
+<li><strong>Save</strong>.</li>
+</ol>
+<p>If you use OrderProof (below), you can skip this step: its <strong>Require phone</strong> setting is on by default and makes the phone required in both the classic checkout and the Checkout block, whatever the Checkout block's own setting says.</p>
+
+<h3>3. Offer Cash on Delivery only where you can collect cash</h3>
+<p>In <strong>WooCommerce &gt; Settings &gt; Payments &gt; Cash on delivery</strong>, the option <strong>Enable for shipping methods</strong> lets you offer COD only with the delivery methods (and so the areas) where your courier collects cash. Leave it empty to offer COD everywhere.</p>
+
+<h3>4. Confirm before you ship</h3>
+<p>COD orders arrive as <strong>Processing</strong>. Before you hand them to the courier, call or message the customer. Put orders you could not confirm on <strong>On hold</strong> so they don't ship by mistake.</p>
+
+<h3>5. Keep a list of customers who refused</h3>
+<p>Note the phone numbers of customers who refused a parcel, and check new orders against that list before shipping.</p>
+
+<p>These steps cost nothing. Steps 4 and 5 take time on every order, and that is where a plugin helps.</p>
+
+<h2>What OrderProof adds (free plugin)</h2>
+<p>We are the developer of OrderProof (Digital Services SARL). It is free on <a href="https://wordpress.org/plugins/orderproof/">WordPress.org</a> and works in the classic checkout and the Checkout block.</p>
+
+<h3>Two ways to use it</h3>
+<p>At the top of <strong>WooCommerce &gt; Settings &gt; OrderProof</strong>, OrderProof asks <strong>"How do you want to use OrderProof?"</strong>:</p>
+<ul>
+<li><strong>Without a Meta account</strong> (the default). Works right after activation, nothing else to set up.</li>
+<li><strong>With a Meta account (WhatsApp Cloud API)</strong>. Everything in the first option, plus an automatic WhatsApp code (OTP) at checkout. See "When you are ready" below.</li>
+</ul>
+<p>You can switch at any time; the settings of the other option are kept. A <strong>Quick start</strong> box under the choice lists the next steps for your option and ticks them as you go (<strong>Hide these steps</strong> hides it).</p>
+<figure><img src="en-1-without-meta.jpg" width="973" height="495" loading="lazy" alt="OrderProof settings: the choice between &quot;Without a Meta account&quot; and &quot;With a Meta account (WhatsApp Cloud API)&quot;, with the Quick start box below"></figure>
+
+<h3>What works without a Meta account</h3>
+<p>All of these were tested with no Meta account, in the classic checkout and the Checkout block:</p>
+<ul>
+<li><strong>Required, validated phone numbers.</strong> <strong>Require phone</strong> is on by default. Numbers are read with the calling code of the customer's billing country, so a local number is converted to its international form. An invalid number is refused before the order is created.</li>
+<li><strong>Duplicate order limit.</strong> Set <strong>Max orders per phone</strong> and <strong>Within (hours)</strong>. For example, with 2 orders in 24 hours, a third order from the same phone is refused, even if the customer types the number in international format (+212…) instead of the local one.</li>
+<li><strong>Blacklist.</strong> Block phone numbers, emails and IP addresses in the settings, or click <strong>Blacklist this customer</strong> on the order screen.</li>
+</ul>
+<figure><img src="screenshot-5.jpg" width="1174" height="1036" loading="lazy" alt="OrderProof settings: maximum orders per phone within a number of hours, and blacklist of phone numbers, emails and IP addresses"></figure>
+<ul>
+<li><strong>WhatsApp confirmation in one click.</strong> On the order screen, <strong>Confirm on WhatsApp</strong> (and the <strong>WhatsApp</strong> button in the orders list) opens a chat with the customer and a message with the order details (order number, items, total), ready to send from your own WhatsApp. An <strong>Awaiting confirmation</strong> status lets you track orders while you wait for the reply.</li>
+<li><strong>"Delivery refused" status.</strong> Mark a refused parcel; the products go back into stock.</li>
+<li><strong>Customer history.</strong> The order screen shows how many past orders were delivered and how many were refused or cancelled, and the orders list shows a badge for each customer (for example "New customer"), before you ship.</li>
+</ul>
+<figure><img src="screenshot-2.jpg" width="1200" height="875" loading="lazy" alt="Order screen with the OrderProof box: customer history, the &quot;Confirm on WhatsApp&quot; button and the &quot;Blacklist this customer&quot; link"></figure>
+<figure><img src="screenshot-4.jpg" width="1200" height="509" loading="lazy" alt="Orders list with the OrderProof statuses, including &quot;Delivery refused&quot;, and the WhatsApp button and customer badge on each order"></figure>
+<p>By default these rules apply to COD orders. Untick <strong>Only Cash on Delivery orders</strong> to apply the phone rules, limits and blacklist to every payment method.</p>
+
+<h3>When you are ready: WhatsApp OTP (with a Meta account)</h3>
+<p>Choose <strong>With a Meta account (WhatsApp Cloud API)</strong> and turn on <strong>Enable WhatsApp OTP</strong>. The customer then receives a 6-digit code on WhatsApp and types it to confirm the order. Until then the order holds no stock and you get no "New order" email. Orders never verified are cancelled automatically after the number of hours you choose (2 by default).</p>
+<p>What it needs: your own WhatsApp Business number on Meta's WhatsApp Cloud API, and an approved message template of the Authentication category. This setup is done in your Meta account and can take time. <strong>Meta bills your WhatsApp Business account for each authentication message</strong> (prices depend on the customer's country, see Meta's pricing page). OrderProof charges nothing per message. <strong>Test mode</strong> lets you try the whole flow before you connect WhatsApp (the code is shown on the verification page and nothing is sent), and <strong>Send test code</strong> checks your setup.</p>
+<figure><img src="en-2-with-meta.jpg" width="973" height="587" loading="lazy" alt="OrderProof settings with &quot;With a Meta account (WhatsApp Cloud API)&quot; selected: the Quick start box shows the Test mode and WhatsApp Business connection steps"></figure>
+
+<h2>What OrderProof does not do</h2>
+<ul>
+<li><strong>It is not a CAPTCHA.</strong> It does not stop bots from reaching your checkout. Use step 1 for that.</li>
+<li><strong>It does not stop card testing</strong> on online payment gateways. Use step 1 and your gateway's own fraud settings.</li>
+<li>Bots that change name, email, IP and phone on every order can get past a blacklist and a duplicate limit. The WhatsApp code helps with COD orders because a fake number cannot confirm, but only once your Meta setup is done.</li>
+<li>We do not publish a reduction figure. Results depend on your store and your customers.</li>
+</ul>
+
+<h2>Quick checklist</h2>
+<ul class="check">
+<li>CAPTCHA on checkout</li>
+<li>Phone required (Checkout block setting, or OrderProof's "Require phone")</li>
+<li>COD offered only where you can collect cash</li>
+<li>Every COD order confirmed before shipping</li>
+<li>Repeat refusers blocked</li>
+<li>Optional: WhatsApp OTP once your Meta setup is ready</li>
+</ul>
+
+<p>Questions about OrderProof? Ask in its <a href="https://wordpress.org/support/plugin/orderproof/">support forum on WordPress.org</a>.</p>
+</article>
+
+<!-- ===================== FR ===================== -->
+<article class="guide" data-lang="fr" lang="fr" hidden>
+<h1>Stopper les fausses commandes en paiement à la livraison sur WooCommerce</h1>
+
+<p>Une fausse commande en paiement à la livraison coûte deux fois : le transporteur facture l'aller, souvent aussi le retour, et le stock reste bloqué plusieurs jours. Aucun réglage unique ne règle le problème. Voici d'abord les étapes gratuites dans WooCommerce, puis ce qu'ajoute notre extension OrderProof.</p>
+
+<p><strong>D'abord, identifiez le type de « fausses commandes » que vous recevez.</strong> Les solutions ne sont pas les mêmes :</p>
+
+<div class="tbl"><table>
+<thead><tr><th scope="col">Ce que vous voyez</th><th scope="col">Cause probable</th><th scope="col">Solution principale</th></tr></thead>
+<tbody>
+<tr><td>Des dizaines de commandes en quelques minutes, noms et e-mails au hasard, souvent le même petit produit, souvent payées par carte</td><td>Robots ou test de cartes volées</td><td>Un CAPTCHA, un pare-feu, les réglages anti-fraude de votre passerelle de paiement (étape 1)</td></tr>
+<tr><td>Des commandes en paiement à la livraison crédibles, mais refusées à la livraison, ou un téléphone qui ne répond jamais</td><td>Commandes sans intention de payer, plaisantins, concurrents</td><td>Contrôle du téléphone, confirmation avant expédition, blocage des refus répétés (étapes 2 à 5, puis OrderProof)</td></tr>
+</tbody>
+</table></div>
+
+<h2>Les étapes gratuites dans WooCommerce (sans extension, sauf l'étape 1)</h2>
+
+<h3>1. Bloquer les robots avec un CAPTCHA</h3>
+<p>Ajoutez un CAPTCHA (par exemple Turnstile ou reCAPTCHA) à la page de commande. Plusieurs extensions gratuites le font : choisissez-en une compatible avec le bloc <strong>« Validation de commande »</strong> si votre boutique l'utilise. Un CAPTCHA, avec les réglages anti-fraude de votre passerelle de paiement, est aussi la réponse habituelle au test de cartes sur les paiements en ligne. Demandez aussi à votre hébergeur si un pare-feu est actif.</p>
+
+<h3>2. Rendre le téléphone obligatoire dans le bloc « Validation de commande »</h3>
+<p>Dans le bloc « Validation de commande », le téléphone est <strong>facultatif par défaut</strong>. Pour le changer dans WooCommerce :</p>
+<ol>
+<li>Allez dans <strong>Pages</strong>, puis sur la page <strong>Checkout</strong> (elle peut s'appeler ainsi même en français), cliquez sur <strong>Modifier</strong>.</li>
+<li>Sélectionnez le bloc <strong>« Validation de commande »</strong> (ou le bloc <strong>« Adresse de facturation »</strong> ou <strong>« Adresse de livraison »</strong>).</li>
+<li>Dans les réglages du bloc, sous <strong>Champs d'adresse</strong>, activez <strong>Téléphone</strong> et choisissez <strong>Obligatoire</strong>.</li>
+<li>Enregistrez.</li>
+</ol>
+<p>Si vous utilisez OrderProof (plus bas), vous pouvez sauter cette étape : son réglage <strong>« Téléphone obligatoire »</strong> (Require phone) est activé par défaut et rend le téléphone obligatoire dans la page de commande classique comme dans le bloc « Validation de commande », quel que soit le réglage du bloc.</p>
+
+<h3>3. Proposer le paiement à la livraison seulement là où le cash est encaissé</h3>
+<p>Dans <strong>WooCommerce &gt; Réglages &gt; Paiements &gt; Paiement à la livraison</strong>, l'option <strong>« Activer les mode d’expédition »</strong> permet de ne proposer le paiement à la livraison qu'avec les modes de livraison (donc les zones) où votre transporteur encaisse. Laissez-la vide pour le proposer partout.</p>
+
+<h3>4. Confirmer avant d'expédier</h3>
+<p>Les commandes en paiement à la livraison arrivent en <strong>En cours</strong>. Avant de les remettre au transporteur, appelez ou écrivez au client. Passez en <strong>En attente</strong> les commandes non confirmées, pour ne pas les expédier par erreur.</p>
+
+<h3>5. Tenir une liste des clients qui refusent</h3>
+<p>Notez les numéros des clients qui ont refusé un colis, et vérifiez chaque nouvelle commande avant de l'expédier.</p>
+
+<p>Ces étapes ne coûtent rien. Les étapes 4 et 5 prennent du temps sur chaque commande : c'est là qu'une extension aide.</p>
+
+<h2>Ce qu'ajoute OrderProof (extension gratuite)</h2>
+<p>Nous sommes l'éditeur d'OrderProof (Digital Services SARL). L'extension est gratuite sur <a href="https://wordpress.org/plugins/orderproof/">WordPress.org</a> et fonctionne avec la page de commande classique comme avec le bloc « Validation de commande ».</p>
+<p><em>Si votre administration affiche encore OrderProof en anglais, le libellé anglais est indiqué entre parenthèses.</em></p>
+
+<h3>Deux façons de l'utiliser</h3>
+<p>En haut de <strong>WooCommerce &gt; Réglages &gt; OrderProof</strong>, OrderProof vous demande <strong>« Comment voulez-vous utiliser OrderProof ? »</strong> :</p>
+<ul>
+<li><strong>« Sans compte Meta »</strong> (Without a Meta account), le choix par défaut. Fonctionne dès l'activation, rien d'autre à configurer.</li>
+<li><strong>« Avec un compte Meta (API WhatsApp Cloud) »</strong> (With a Meta account (WhatsApp Cloud API)). Tout ce que propose la première option, plus un code WhatsApp automatique (OTP) à la validation de commande. Voir « Quand vous serez prêt » plus bas.</li>
+</ul>
+<p>Vous pouvez changer à tout moment : les réglages de l'autre option sont conservés. Un cadre <strong>« Démarrage rapide »</strong> (Quick start) sous ce choix liste les prochaines étapes pour votre option et les coche au fur et à mesure (<strong>« Masquer ces étapes »</strong> le masque).</p>
+<figure><img src="fr-1-without-meta.jpg" width="973" height="512" loading="lazy" alt="Réglages OrderProof : le choix entre « Sans compte Meta » et « Avec un compte Meta (API WhatsApp Cloud) », avec le cadre « Démarrage rapide » en dessous"></figure>
+
+<h3>Ce qui fonctionne sans compte Meta</h3>
+<p>Tout ceci a été testé sans compte Meta, avec la page de commande classique et le bloc « Validation de commande » :</p>
+<ul>
+<li><strong>Téléphone obligatoire et vérifié.</strong> <strong>« Téléphone obligatoire »</strong> (Require phone) est activé par défaut. Le numéro est lu avec l'indicatif du pays de facturation du client : un numéro local est converti au format international. Un numéro invalide est refusé avant la création de la commande.</li>
+<li><strong>Limite de commandes en double.</strong> Réglez <strong>« Commandes max. par téléphone »</strong> (Max orders per phone) et <strong>« Sur une période de (heures) »</strong> (Within (hours)). Par exemple, avec 2 commandes sur 24 heures, une troisième commande du même téléphone est refusée, même si le client saisit le numéro au format international (+212…) au lieu du format local.</li>
+<li><strong>Liste noire.</strong> Bloquez des numéros, des e-mails et des adresses IP dans les réglages, ou cliquez sur <strong>« Mettre ce client sur liste noire »</strong> (Blacklist this customer) dans l'écran de la commande.</li>
+</ul>
+<figure><img src="screenshot-5.jpg" width="1174" height="1036" loading="lazy" alt="Réglages OrderProof (interface en anglais) : nombre maximum de commandes par téléphone sur une période en heures, et liste noire de numéros, d'e-mails et d'adresses IP"></figure>
+<ul>
+<li><strong>Confirmation WhatsApp en un clic.</strong> Dans l'écran de la commande, <strong>« Confirmer sur WhatsApp »</strong> (Confirm on WhatsApp), ainsi que le bouton <strong>WhatsApp</strong> de la liste des commandes, ouvre une discussion avec le client et un message avec les détails de la commande (numéro, articles, total), prêt à être envoyé depuis votre propre WhatsApp. Le statut <strong>« En attente de confirmation »</strong> (Awaiting confirmation) vous aide à suivre les commandes en attendant la réponse.</li>
+<li><strong>Statut « Livraison refusée »</strong> (Delivery refused). Marquez un colis refusé : les produits reviennent en stock.</li>
+<li><strong>Historique du client.</strong> L'écran de la commande indique combien de commandes passées ont été livrées et combien ont été refusées ou annulées, et la liste des commandes affiche un badge pour chaque client (par exemple « Nouveau client »), avant l'expédition.</li>
+</ul>
+<figure><img src="screenshot-2.jpg" width="1200" height="875" loading="lazy" alt="Écran de la commande (interface en anglais) avec le cadre OrderProof : historique du client, bouton « Confirmer sur WhatsApp » et lien « Mettre ce client sur liste noire »"></figure>
+<figure><img src="screenshot-4.jpg" width="1200" height="509" loading="lazy" alt="Liste des commandes (interface en anglais) avec les statuts OrderProof, dont « Livraison refusée », et le bouton WhatsApp et le badge client sur chaque commande"></figure>
+<p>Par défaut, ces règles s'appliquent aux commandes en paiement à la livraison. Décochez <strong>« Uniquement les commandes en paiement à la livraison »</strong> (Only Cash on Delivery orders) pour appliquer les règles téléphone, les limites et la liste noire à tous les moyens de paiement.</p>
+
+<h3>Quand vous serez prêt : le code WhatsApp (OTP), avec un compte Meta</h3>
+<p>Choisissez <strong>« Avec un compte Meta (API WhatsApp Cloud) »</strong> et activez <strong>« Activer l’OTP WhatsApp »</strong> (Enable WhatsApp OTP). Le client reçoit alors un code à 6 chiffres sur WhatsApp et le saisit pour confirmer sa commande. En attendant, la commande ne bloque pas de stock et vous ne recevez pas l'e-mail « Nouvelle commande ». Les commandes jamais vérifiées sont annulées automatiquement après le nombre d'heures choisi (2 par défaut).</p>
+<p>Ce qu'il faut : votre propre numéro WhatsApp Business sur l'API WhatsApp Cloud de Meta, et un modèle de message approuvé de la catégorie Authentification. Cette configuration se fait dans votre compte Meta et peut prendre du temps. <strong>Meta facture votre compte WhatsApp Business pour chaque message d'authentification</strong> (le prix dépend du pays du client, voir la page tarifs de Meta). OrderProof ne facture rien par message. Le <strong>« Mode test »</strong> (Test mode) permet d'essayer tout le parcours avant de connecter WhatsApp (le code s'affiche sur la page de vérification et rien n'est envoyé), et <strong>« Envoyer un code test »</strong> (Send test code) vérifie votre configuration.</p>
+<figure><img src="fr-2-with-meta.jpg" width="973" height="607" loading="lazy" alt="Réglages OrderProof avec « Avec un compte Meta (API WhatsApp Cloud) » sélectionné : le cadre « Démarrage rapide » montre les étapes mode test et connexion du numéro WhatsApp Business"></figure>
+
+<h2>Ce qu'OrderProof ne fait pas</h2>
+<ul>
+<li><strong>Ce n'est pas un CAPTCHA.</strong> Il n'empêche pas les robots d'atteindre la page de commande : c'est le rôle de l'étape 1.</li>
+<li><strong>Il n'arrête pas le test de cartes</strong> sur les passerelles de paiement en ligne : étape 1 et réglages anti-fraude de votre passerelle.</li>
+<li>Des robots qui changent de nom, d'e-mail, d'IP et de numéro à chaque commande peuvent passer une liste noire et une limite de doublons. Le code WhatsApp aide pour les commandes en paiement à la livraison, car un faux numéro ne peut pas confirmer, mais seulement une fois votre configuration Meta terminée.</li>
+<li>Nous ne publions aucun chiffre de réduction : les résultats dépendent de votre boutique et de vos clients.</li>
+</ul>
+
+<h2>Récapitulatif</h2>
+<ul class="check">
+<li>CAPTCHA sur la page de commande</li>
+<li>Téléphone obligatoire (réglage du bloc « Validation de commande », ou « Téléphone obligatoire » d'OrderProof)</li>
+<li>Paiement à la livraison proposé seulement là où il est encaissé</li>
+<li>Chaque commande en paiement à la livraison confirmée avant l'expédition</li>
+<li>Clients qui refusent à répétition bloqués</li>
+<li>En option : code WhatsApp une fois votre configuration Meta prête</li>
+</ul>
+
+<p>Une question sur OrderProof ? Posez-la sur son <a href="https://wordpress.org/support/plugin/orderproof/">forum d'assistance sur WordPress.org</a>.</p>
+</article>
+
+<!-- ===================== AR ===================== -->
+<article class="guide" data-lang="ar" lang="ar" dir="rtl" hidden>
+<h1>كيف توقف الطلبات الوهمية في الدفع عند الاستلام على ووكومرس</h1>
+
+<p>الطلب الوهمي في الدفع عند الاستلام يكلّفك مرتين: تدفع لشركة التوصيل ثمن الذهاب وغالبًا ثمن الإرجاع أيضًا، ويبقى المخزون محجوزًا لأيام. لا يوجد إعداد واحد يحلّ المشكلة. إليك أولًا الخطوات المجانية في ووكومرس، ثم ما تضيفه إضافتنا OrderProof.</p>
+
+<p><strong>أولًا، حدّد نوع "الطلبات الوهمية" التي تصلك</strong>، لأن الحلّ يختلف:</p>
+
+<div class="tbl"><table>
+<thead><tr><th scope="col">ما تراه</th><th scope="col">السبب المحتمل</th><th scope="col">الحلّ الأساسي</th></tr></thead>
+<tbody>
+<tr><td>عشرات الطلبات في دقائق، بأسماء وبريد عشوائي، غالبًا للمنتج الرخيص نفسه، وغالبًا بالدفع بالبطاقة</td><td>روبوتات أو تجربة بطاقات مسروقة</td><td>كابتشا، جدار حماية، إعدادات مكافحة الاحتيال في بوابة الدفع (الخطوة 1)</td></tr>
+<tr><td>طلبات دفع عند الاستلام تبدو حقيقية، لكن الزبون يرفض الطرد أو لا يردّ على الهاتف</td><td>طلبات بلا نية للشراء، مزاح، منافسون</td><td>التحقق من الهاتف، التأكيد قبل الشحن، حظر من يرفض مرارًا (الخطوات 2 إلى 5، ثم OrderProof)</td></tr>
+</tbody>
+</table></div>
+
+<h2>خطوات مجانية في ووكومرس (بدون إضافة، ما عدا الخطوة 1)</h2>
+
+<h3>1. أوقف الروبوتات بكابتشا</h3>
+<p>أضف كابتشا (مثل Turnstile أو reCAPTCHA) إلى صفحة إتمام الطلب. توجد عدة إضافات مجانية لذلك؛ اختر واحدة تدعم كتلة <strong>«إتمام الطلب»</strong> إذا كان متجرك يستعملها. والكابتشا، مع إعدادات مكافحة الاحتيال في بوابة الدفع، هي أيضًا الحلّ المعتاد ضد تجربة البطاقات في الدفع الإلكتروني. واسأل شركة الاستضافة هل يوجد جدار حماية مفعّل.</p>
+
+<h3>2. اجعل رقم الهاتف إلزاميًا في كتلة «إتمام الطلب»</h3>
+<p>في كتلة «إتمام الطلب»، حقل الهاتف <strong>اختياري افتراضيًا</strong>. لتغييره في ووكومرس:</p>
+<ol>
+<li>ادخل إلى <strong>صفحات</strong>، ثم صفحة <strong>Checkout</strong> (قد يبقى اسمها هكذا حتى بالعربية)، واضغط <strong>تحرير</strong>.</li>
+<li>اختر كتلة <strong>«إتمام الطلب»</strong> (أو كتلة <strong>«عنوان الفوترة»</strong> أو <strong>«عنوان الشحن»</strong>).</li>
+<li>في إعدادات الكتلة، ضمن <strong>حقول العنوان</strong>، فعّل <strong>الهاتف</strong> واجعله <strong>مطلوبة</strong>.</li>
+<li>احفظ.</li>
+</ol>
+<p>إذا كنت تستعمل OrderProof (أدناه)، يمكنك تخطّي هذه الخطوة: إعداد <strong>«رقم الهاتف إلزامي»</strong> (Require phone) مفعّل افتراضيًا، ويجعل الهاتف إلزاميًا في صفحة الدفع الكلاسيكية وفي كتلة «إتمام الطلب»، مهما كان إعداد الكتلة نفسها.</p>
+
+<h3>3. اعرض الدفع عند الاستلام فقط حيث يُحصَّل المبلغ</h3>
+<p>في <strong>WooCommerce &gt; الإعدادات &gt; المدفوعات &gt; الدفع نقدًا عند الاستلام</strong>، يتيح خيار <strong>«التفعيل فقط لطرق الشحن»</strong> أن تعرض الدفع عند الاستلام فقط مع طرق الشحن (أي المناطق) التي تحصّل فيها شركة التوصيل المبلغ نقدًا. اتركه فارغًا لعرضه في كل مكان.</p>
+
+<h3>4. أكّد الطلب قبل الشحن</h3>
+<p>تصل طلبات الدفع عند الاستلام بحالة <strong>«قيد التنفيذ»</strong>. قبل تسليمها لشركة التوصيل، اتصل بالزبون أو راسله. وضَع الطلبات التي لم تتأكد منها في حالة <strong>«قيد الإنتظار»</strong> حتى لا تُشحن بالخطأ.</p>
+
+<h3>5. احتفظ بقائمة الزبائن الذين رفضوا الاستلام</h3>
+<p>سجّل أرقام من رفضوا طردًا، وراجع كل طلب جديد على هذه القائمة قبل الشحن.</p>
+
+<p>هذه الخطوات لا تكلّف شيئًا، لكن الخطوتين 4 و5 تأخذان وقتًا مع كل طلب، وهنا تفيد الإضافة.</p>
+
+<h2>ما تضيفه OrderProof (إضافة مجانية)</h2>
+<p>نحن مطوّرو إضافة OrderProof (شركة Digital Services SARL). الإضافة مجانية على <a href="https://wordpress.org/plugins/orderproof/">WordPress.org</a>، وتعمل في صفحة الدفع الكلاسيكية وفي كتلة «إتمام الطلب».</p>
+<p><em>إذا كانت لوحة التحكم ما زالت تعرض OrderProof بالإنجليزية، فالاسم الإنجليزي مكتوب بين قوسين.</em></p>
+
+<h3>طريقتان للاستعمال</h3>
+<p>في أعلى <strong>WooCommerce &gt; الإعدادات &gt; OrderProof</strong>، تسألك الإضافة <strong>«كيف تريد استخدام OrderProof؟»</strong>:</p>
+<ul>
+<li><strong>«بدون حساب Meta»</strong> (Without a Meta account)، وهو الخيار الافتراضي. تعمل فور التفعيل، بلا أي إعداد آخر.</li>
+<li><strong>«مع حساب Meta (واجهة WhatsApp Cloud API)»</strong> (With a Meta account (WhatsApp Cloud API)). كل ما في الخيار الأول، بالإضافة إلى رمز واتساب تلقائي (OTP) عند إتمام الطلب. راجع «عندما تكون جاهزًا» أدناه.</li>
+</ul>
+<p>يمكنك التبديل في أي وقت، وتُحفظ إعدادات الخيار الآخر. وتحت هذا الاختيار يعرض مربّع <strong>«بداية سريعة»</strong> (Quick start) الخطوات التالية لخيارك ويعلّمها كلما أنجزتها (ويخفيه رابط <strong>«إخفاء هذه الخطوات»</strong>).</p>
+<figure><img src="ar-1-without-meta.jpg" width="973" height="472" loading="lazy" alt="إعدادات OrderProof: الاختيار بين «بدون حساب Meta» و«مع حساب Meta (واجهة WhatsApp Cloud API)»، وتحته مربّع «بداية سريعة»"></figure>
+
+<h3>ما يعمل بدون حساب Meta</h3>
+<p>جُرّبت كل هذه الميزات بدون حساب Meta، في صفحة الدفع الكلاسيكية وفي كتلة «إتمام الطلب»:</p>
+<ul>
+<li><strong>هاتف إلزامي ومُتحقَّق منه.</strong> إعداد <strong>«رقم الهاتف إلزامي»</strong> (Require phone) مفعّل افتراضيًا. يُقرأ الرقم بمفتاح الاتصال الخاص ببلد الفوترة، فيُحوَّل الرقم المحلي إلى الصيغة الدولية، ويُرفض الرقم غير الصحيح قبل إنشاء الطلب.</li>
+<li><strong>حدّ للطلبات المكرّرة.</strong> اضبط <strong>«الحد الأقصى للطلبات لكل هاتف»</strong> (Max orders per phone) و<strong>«خلال (ساعات)»</strong> (Within (hours)). مثلًا، مع طلبين خلال 24 ساعة، يُرفض الطلب الثالث من الهاتف نفسه، حتى لو كتب الزبون الرقم بالصيغة الدولية (&lrm;+212…) بدل الصيغة المحلية.</li>
+<li><strong>قائمة سوداء.</strong> احظر أرقام هواتف وعناوين بريد إلكتروني وعناوين IP من الإعدادات، أو اضغط <strong>«إضافة هذا العميل إلى القائمة السوداء»</strong> (Blacklist this customer) في شاشة الطلب.</li>
+</ul>
+<figure><img src="screenshot-5.jpg" width="1174" height="1036" loading="lazy" alt="إعدادات OrderProof (الواجهة بالإنجليزية): الحد الأقصى للطلبات لكل هاتف خلال عدد من الساعات، والقائمة السوداء لأرقام الهواتف والبريد الإلكتروني وعناوين IP"></figure>
+<ul>
+<li><strong>تأكيد عبر واتساب بنقرة واحدة.</strong> في شاشة الطلب، يفتح زر <strong>«التأكيد عبر واتساب»</strong> (Confirm on WhatsApp)، وكذلك زر <strong>واتساب</strong> في قائمة الطلبات، محادثة مع الزبون ورسالة بتفاصيل الطلب (رقم الطلب، المنتجات، المبلغ)، جاهزة للإرسال من واتساب الخاص بك. وتساعدك حالة <strong>«بانتظار التأكيد»</strong> (Awaiting confirmation) على متابعة الطلبات ريثما يردّ الزبون.</li>
+<li><strong>حالة «تم رفض الاستلام»</strong> (Delivery refused). علّم الطرد المرفوض، فتعود المنتجات إلى المخزون.</li>
+<li><strong>سجل العميل.</strong> تعرض شاشة الطلب كم طلبًا سابقًا استُلم وكم طلبًا رُفض أو أُلغي، وتعرض قائمة الطلبات شارة لكل زبون (مثل «عميل جديد»)، قبل أن تشحن.</li>
+</ul>
+<figure><img src="screenshot-2.jpg" width="1200" height="875" loading="lazy" alt="شاشة الطلب (الواجهة بالإنجليزية) مع مربّع OrderProof: سجل العميل، وزر «التأكيد عبر واتساب»، ورابط «إضافة هذا العميل إلى القائمة السوداء»"></figure>
+<figure><img src="screenshot-4.jpg" width="1200" height="509" loading="lazy" alt="قائمة الطلبات (الواجهة بالإنجليزية) مع حالات OrderProof، ومنها «تم رفض الاستلام»، وزر واتساب وشارة الزبون في كل طلب"></figure>
+<p>افتراضيًا تُطبَّق هذه القواعد على طلبات الدفع عند الاستلام. ألغِ تحديد <strong>«طلبات الدفع عند الاستلام فقط»</strong> (Only Cash on Delivery orders) لتطبيق قواعد الهاتف والحدود والقائمة السوداء على كل طرق الدفع.</p>
+
+<h3>عندما تكون جاهزًا: رمز التحقق عبر واتساب (OTP) مع حساب Meta</h3>
+<p>اختر <strong>«مع حساب Meta (واجهة WhatsApp Cloud API)»</strong> وفعّل <strong>«تفعيل رمز التحقق عبر واتساب»</strong> (Enable WhatsApp OTP). عندها يصل الزبون رمز من 6 أرقام على واتساب، فيكتبه لتأكيد الطلب. وإلى أن يؤكّد، لا يحجز الطلب أي مخزون ولا تصلك رسالة "طلب جديد". والطلبات التي لا تُؤكَّد تُلغى تلقائيًا بعد عدد الساعات الذي تختاره (ساعتان افتراضيًا).</p>
+<p>ما تحتاجه: رقم واتساب للأعمال خاص بك على واجهة WhatsApp Cloud API من Meta، وقالب رسالة معتمد من فئة المصادقة (Authentication). يتمّ هذا الإعداد في حسابك على Meta وقد يأخذ وقتًا. <strong>تحاسب Meta حساب واتساب للأعمال الخاص بك على كل رسالة مصادقة</strong> (السعر حسب بلد الزبون، راجع صفحة أسعار Meta)، ولا تأخذ OrderProof أي رسوم على الرسائل. ويتيح <strong>«وضع الاختبار»</strong> (Test mode) تجربة المسار كاملًا قبل ربط واتساب (يظهر الرمز في صفحة التحقق ولا يُرسل شيء)، ويتحقق زر <strong>«إرسال رمز تجريبي»</strong> (Send test code) من إعدادك.</p>
+<figure><img src="ar-2-with-meta.jpg" width="973" height="566" loading="lazy" alt="إعدادات OrderProof مع اختيار «مع حساب Meta (واجهة WhatsApp Cloud API)»: مربّع «بداية سريعة» يعرض خطوتي وضع الاختبار وربط رقم واتساب للأعمال"></figure>
+
+<h2>ما لا تفعله OrderProof</h2>
+<ul>
+<li><strong>ليست كابتشا.</strong> لا تمنع الروبوتات من الوصول إلى صفحة إتمام الطلب؛ هذا دور الخطوة 1.</li>
+<li><strong>لا توقف تجربة البطاقات</strong> على بوابات الدفع الإلكتروني؛ استعمل الخطوة 1 وإعدادات مكافحة الاحتيال في بوابة الدفع.</li>
+<li>الروبوتات التي تغيّر الاسم والبريد وعنوان IP ورقم الهاتف مع كل طلب قد تتجاوز القائمة السوداء وحدّ التكرار. رمز واتساب يساعد في طلبات الدفع عند الاستلام لأن الرقم الوهمي لا يستطيع التأكيد، لكن فقط بعد إتمام إعداد Meta.</li>
+<li>لا ننشر أي نسبة انخفاض؛ النتائج تختلف حسب متجرك وزبائنك.</li>
+</ul>
+
+<h2>قائمة تحقق سريعة</h2>
+<ul class="check">
+<li>كابتشا في صفحة إتمام الطلب</li>
+<li>الهاتف إلزامي (إعداد كتلة «إتمام الطلب»، أو «رقم الهاتف إلزامي» في OrderProof)</li>
+<li>الدفع عند الاستلام معروض فقط حيث يُحصَّل</li>
+<li>كل طلب دفع عند الاستلام مؤكَّد قبل الشحن</li>
+<li>من يرفض الاستلام مرارًا محظور</li>
+<li>اختياري: رمز واتساب بعد جاهزية إعداد Meta</li>
+</ul>
+
+<p>لديك سؤال عن OrderProof؟ اطرحه في <a href="https://wordpress.org/support/plugin/orderproof/">منتدى الدعم الخاص بها على WordPress.org</a>.</p>
+</article>
+</main>
+
+<footer>© <span id="y">2026</span> Digital Services SARL · <a href="/" data-t="home">All our plugins</a> · <span data-t="tm">WordPress, WooCommerce and WhatsApp are trademarks of their respective owners.</span></footer>
+</div>
+
+<script>
+const T={
+ fr:{kicker:"<a href=\"/orderproof/\">OrderProof</a> · Guide",home:"Toutes nos extensions",tm:"WordPress, WooCommerce et WhatsApp sont des marques de leurs propriétaires respectifs.",title:"Stopper les fausses commandes en paiement à la livraison sur WooCommerce",desc:"Les étapes gratuites dans WooCommerce contre les fausses commandes en paiement à la livraison : CAPTCHA, téléphone obligatoire dans le bloc Validation de commande, paiement à la livraison seulement là où il est encaissé, confirmation avant expédition. Puis ce qu'ajoute l'extension gratuite OrderProof."},
+ ar:{kicker:"دليل <a href=\"/orderproof/\">OrderProof</a>",home:"كل إضافاتنا",tm:"WordPress وWooCommerce وWhatsApp علامات تجارية لمالكيها.",title:"كيف توقف الطلبات الوهمية في الدفع عند الاستلام على ووكومرس",desc:"خطوات مجانية في ووكومرس ضد الطلبات الوهمية في الدفع عند الاستلام: كابتشا، هاتف إلزامي في كتلة «إتمام الطلب»، الدفع عند الاستلام فقط حيث يُحصَّل، والتأكيد قبل الشحن. ثم ما تضيفه إضافة OrderProof المجانية."}
+};
+const md=document.querySelector('meta[name=description]');
+const EN={};document.querySelectorAll('[data-t]').forEach(e=>EN[e.dataset.t]=e.innerHTML);EN.title=document.title;EN.desc=md.content;T.en=EN;
+function setLang(l){if(!T[l])l='en';const d=T[l];document.querySelectorAll('[data-t]').forEach(e=>{if(d[e.dataset.t])e.innerHTML=d[e.dataset.t]});document.querySelectorAll('article[data-lang]').forEach(a=>a.hidden=a.dataset.lang!==l);document.title=d.title;md.content=d.desc;document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));try{localStorage.setItem('lang',l)}catch(e){}}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+let saved;try{saved=localStorage.getItem('lang')}catch(e){}
+const nav=(navigator.language||'en').slice(0,2);setLang(saved||(T[nav]?nav:'en'));
+document.getElementById('y').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
