@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DSSarl Upgrade Scanner for PHP Compatibility – WordPress plugins and themes</title>
+<meta name="description" content="DSSarl Upgrade Scanner scans the plugins and themes on your own server and flags likely incompatibilities with a newer PHP version, up to PHP 8.5. Premium plugins included, nothing sent anywhere. Free, by Digital Services SARL.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' text-anchor='middle' fill='white'%3EDS%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://dssarl.com/upgrade-scanner/">
+<meta property="og:title" content="DSSarl Upgrade Scanner for PHP Compatibility">
+<meta property="og:description" content="Check your plugins and themes for likely PHP incompatibilities before you upgrade PHP. Runs on your own server.">
+<meta property="og:url" content="https://dssarl.com/upgrade-scanner/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Kufi+Arabic:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8f7;--card:#fff;--ink:#14201d;--muted:#5b6b67;--line:#e3e8e6;--brand:#0f766e;--brand-ink:#fff;--soft:#e6f4f1}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1514;--card:#16201e;--ink:#e8efed;--muted:#9fb0ab;--line:#26332f;--brand:#2dd4bf;--brand-ink:#06201c;--soft:#15302b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+html[dir=rtl] body{font-family:"Noto Kufi Arabic",Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:var(--ink)}
+.logo b{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand);color:var(--brand-ink);font-size:14px}
+.langs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.langs button{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;padding:4px 12px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink)}
+.hero{padding:48px 0 32px}
+.kicker{color:var(--brand);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+html[dir=rtl] .kicker{letter-spacing:0}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.15;margin:10px 0 6px;max-width:780px}
+.sub{font-size:20px;font-weight:600;color:var(--muted);margin:0 0 16px}
+.lead{color:var(--muted);font-size:18px;max-width:680px;margin:0 0 28px}
+.btn{display:inline-block;background:var(--brand);color:var(--brand-ink);padding:12px 20px;border-radius:10px;font-weight:600;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);margin-inline-start:8px}
+.btn.off{background:var(--soft);color:var(--muted);border:1px dashed var(--line);cursor:default}
+.note{color:var(--muted);font-size:14px;margin:12px 0 0}
+section{padding:32px 0}
+h2{font-size:26px;margin:0 0 18px}
+.values{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.values div{padding:18px;border-inline-start:3px solid var(--brand);background:var(--card);border-radius:10px}
+.values strong{display:block;margin-bottom:4px}
+.values span{color:var(--muted);font-size:15px}
+.steps{margin:0;padding-inline-start:22px;color:var(--muted);max-width:760px}
+.steps li{margin-bottom:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.shots{display:grid;gap:20px}
+.shots figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.shots img{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
+.shots figcaption{padding:12px 16px;color:var(--muted);font-size:15px}
+.facts{margin:0;padding-inline-start:20px;color:var(--muted)}
+.facts li{margin-bottom:6px}
+.disclaimer{border-inline-start:3px solid var(--brand)}
+.disclaimer p{margin:0 0 12px}
+.disclaimer p:last-child{margin-bottom:0}
+.contact{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted);font-size:14px}
+@media (max-width:560px){.btn.ghost{margin:10px 0 0}.hero{padding-top:24px}header{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="/"><b>DS</b><span>Digital Services SARL</span></a>
+  <nav class="langs" aria-label="Language">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="fr" aria-pressed="false">FR</button>
+    <button data-lang="ar" aria-pressed="false">ع</button>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <div class="kicker" data-t="kicker">Free WordPress plugin</div>
+  <h1>DSSarl Upgrade Scanner</h1>
+  <p class="sub" data-t="sub">for PHP Compatibility</p>
+  <p class="lead" data-t="lead">Your host wants you on a newer PHP version. DSSarl Upgrade Scanner scans the plugins and themes on your own server and flags likely incompatibilities with the PHP version you choose, so you know where to look before you switch.</p>
+  <span class="btn off" aria-disabled="true" data-t="ctaSoon">Coming soon to WordPress.org</span><a class="btn ghost" href="#how" data-t="ctaHow">How it works</a>
+  <!-- After WordPress.org approval, replace the line above with this line:
+  <a class="btn" href="https://wordpress.org/plugins/dssarl-upgrade-scanner/" data-t="ctaFree">Get it free on WordPress.org</a><a class="btn ghost" href="#how" data-t="ctaHow">How it works</a>
+  -->
+  <p class="note" data-t="ctaNote">Free. No account, no API key.</p>
+</div>
+
+<section id="what">
+  <h2 data-t="whatTitle">What DSSarl Upgrade Scanner does</h2>
+  <div class="values">
+    <div><strong data-t="w1t">Runs on your own server</strong><span data-t="w1d">The scan reads the PHP files on your server. No outside service, no account, and your code is never sent anywhere.</span></div>
+    <div><strong data-t="w2t">Premium and custom code included</strong><span data-t="w2d">Because the scan is local, it also covers premium and custom plugins and themes that are not on WordPress.org.</span></div>
+    <div><strong data-t="w3t">Target PHP up to 8.5</strong><span data-t="w3d">Pick one released PHP version (7.0 to 8.5) and check against it, without alerts about versions that do not exist yet.</span></div>
+    <div><strong data-t="w4t">Built for shared hosting</strong><span data-t="w4d">Short, resumable batches with a progress bar. Close the tab and the scan continues in the background. Cancel at any time.</span></div>
+    <div><strong data-t="w5t">Results by plugin, rule and file</strong><span data-t="w5d">Errors first, then warnings, grouped by plugin or theme, then by rule and by file and line. An "update available" hint shows where updating first may help.</span></div>
+    <div><strong data-t="w6t">Focus on code that runs</strong><span data-t="w6d">Ignore a rule or a file you have already reviewed. Third-party and development code (such as vendor and tests folders) is labelled and can be hidden.</span></div>
+    <div><strong data-t="w7t">Read-only</strong><span data-t="w7d">DSSarl Upgrade Scanner never changes your files and never changes your PHP version. It shows you where to look; it does not fix code.</span></div>
+  </div>
+</section>
+
+<section id="how">
+  <h2 data-t="howTitle">How it works</h2>
+  <ol class="steps">
+    <li data-t="s1">Go to Tools &gt; DSSarl Upgrade Scanner (administrators only).</li>
+    <li data-t="s2">Choose the PHP version you plan to move to.</li>
+    <li data-t="s3">Choose the plugins and themes to scan. Your active plugins and theme are selected by default.</li>
+    <li data-t="s4">Click Scan and follow the progress bar.</li>
+    <li data-t="s5">Read the results, then update, contact the plugin author or ask a developer, and test on a staging site before you change PHP.</li>
+  </ol>
+</section>
+
+<section id="screens">
+  <h2 data-t="shotsTitle">Screenshots</h2>
+  <div class="shots">
+    <figure><img src="screenshot-1.jpg" width="1568" height="773" loading="lazy" alt="DSSarl Upgrade Scanner screen: target PHP version and the list of plugins and themes to scan" data-t="alt1"><figcaption data-t="cap1">Choose the target PHP version and the plugins and themes to scan.</figcaption></figure>
+    <figure><img src="screenshot-3.jpg" width="1568" height="773" loading="lazy" alt="Results summary table by plugin or theme" data-t="alt3"><figcaption data-t="cap3">Results summary: errors, warnings, files not scanned and files scanned for each plugin or theme, with the target PHP version and the rules version used.</figcaption></figure>
+    <figure><img src="screenshot-4.jpg" width="1568" height="773" loading="lazy" alt="Findings for one plugin, by rule and by file" data-t="alt4"><figcaption data-t="cap4">Findings for one plugin, by rule and by file, with ignore options and third-party and development code labelled.</figcaption></figure>
+  </div>
+</section>
+
+<section id="read">
+  <h2 data-t="readTitle">Please read</h2>
+  <div class="card disclaimer">
+    <p data-t="disc">These results come from automated static analysis and are guidance only. They may include false alarms and may miss problems. A clean result does not guarantee your site will work on this PHP version. Back up and test on a staging site before changing PHP.</p>
+    <p data-t="privacy">Privacy: scanning runs entirely on your own server. DSSarl Upgrade Scanner does not send your code, files, scan results or any other site data anywhere.</p>
+    <p class="note" data-t="credit">Powered by the open-source PHP_CodeSniffer and PHPCompatibility projects. DSSarl Upgrade Scanner is an independent plugin by Digital Services SARL and is not affiliated with or endorsed by those projects.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="card contact">
+    <div>
+      <h2 data-t="contactTitle" style="margin-bottom:6px">Questions?</h2>
+      <p style="margin:0;color:var(--muted)" data-t="by">DSSarl Upgrade Scanner is made by Digital Services SARL, Nouakchott, Mauritania.</p>
+    </div>
+    <a class="btn" href="mailto:contact@dssarl.com">contact@dssarl.com</a>
+  </div>
+</section>
+</main>
+
+<footer>© <span id="y">2026</span> Digital Services SARL · <a href="/" data-t="home">All our plugins</a> · <span data-t="tm">WordPress and PHP are trademarks of their respective owners.</span></footer>
+</div>
+
+<script>
+const T={
+ fr:{kicker:"Extension WordPress gratuite",sub:"Analyseur de compatibilité PHP",lead:"Votre hébergeur veut vous faire passer à une version plus récente de PHP. DSSarl Upgrade Scanner analyse les extensions et thèmes présents sur votre propre serveur et signale les incompatibilités probables avec la version de PHP que vous choisissez, pour que vous sachiez où regarder avant de changer.",ctaSoon:"Bientôt sur WordPress.org",ctaFree:"Gratuit sur WordPress.org",ctaHow:"Comment ça marche",ctaNote:"Gratuit. Sans compte, sans clé API.",whatTitle:"Ce que fait DSSarl Upgrade Scanner",w1t:"S'exécute sur votre propre serveur",w1d:"L'analyse lit les fichiers PHP sur votre serveur. Aucun service extérieur, aucun compte, et votre code n'est jamais envoyé nulle part.",w2t:"Extensions premium et sur mesure incluses",w2d:"Comme l'analyse est locale, elle couvre aussi les extensions et thèmes premium ou sur mesure qui ne sont pas sur WordPress.org.",w3t:"PHP cible jusqu'à 8.5",w3d:"Choisissez une version de PHP publiée (7.0 à 8.5) et vérifiez par rapport à elle, sans alertes sur des versions qui n'existent pas encore.",w4t:"Conçu pour l'hébergement mutualisé",w4d:"Des lots courts et reprenables, avec une barre de progression. Fermez l'onglet et l'analyse continue en arrière-plan. Annulez à tout moment.",w5t:"Résultats par extension, règle et fichier",w5d:"Les erreurs d'abord, puis les avertissements, regroupés par extension ou thème, puis par règle et par fichier et ligne. Une indication « mise à jour disponible » montre où une mise à jour préalable peut aider.",w6t:"Concentrez-vous sur le code qui s'exécute",w6d:"Ignorez une règle ou un fichier déjà vérifié. Le code tiers et de développement (comme les dossiers vendor et tests) est signalé et peut être masqué.",w7t:"Lecture seule",w7d:"DSSarl Upgrade Scanner ne modifie jamais vos fichiers ni votre version de PHP. Il vous montre où regarder ; il ne corrige pas le code.",howTitle:"Comment ça marche",s1:"Allez dans Outils &gt; DSSarl Upgrade Scanner (administrateurs uniquement).",s2:"Choisissez la version de PHP vers laquelle vous prévoyez de passer.",s3:"Choisissez les extensions et thèmes à analyser. Vos extensions et votre thème actifs sont sélectionnés par défaut.",s4:"Cliquez sur Analyser et suivez la barre de progression.",s5:"Lisez les résultats, puis mettez à jour, contactez l'auteur de l'extension ou un développeur, et testez sur un site de préproduction avant de changer de version PHP.",shotsTitle:"Captures d'écran",cap1:"Choisissez la version de PHP cible et les extensions et thèmes à analyser.",cap3:"Résumé des résultats : erreurs, avertissements, fichiers non analysés et fichiers analysés pour chaque extension ou thème, avec la version de PHP cible et la version des règles utilisée.",cap4:"Résultats pour une extension, par règle et par fichier, avec les options pour ignorer et le code tiers et de développement signalé.",readTitle:"À lire",disc:"Ces résultats proviennent d'une analyse statique automatique et sont fournis à titre indicatif. Ils peuvent contenir de fausses alertes et omettre des problèmes. Un résultat sans erreur ne garantit pas que votre site fonctionnera avec cette version de PHP. Sauvegardez et testez sur un site de préproduction avant de changer de version PHP.",privacy:"Confidentialité : l'analyse s'exécute entièrement sur votre propre serveur. DSSarl Upgrade Scanner n'envoie nulle part votre code, vos fichiers, vos résultats d'analyse ni aucune autre donnée de votre site.",credit:"Repose sur les projets open source PHP_CodeSniffer et PHPCompatibility. DSSarl Upgrade Scanner est une extension indépendante de Digital Services SARL ; elle n'est ni affiliée à ces projets ni approuvée par eux.",contactTitle:"Des questions ?",by:"DSSarl Upgrade Scanner est conçu par Digital Services SARL, Nouakchott, Mauritanie.",home:"Toutes nos extensions",tm:"WordPress et PHP sont des marques de leurs propriétaires respectifs.",title:"DSSarl Upgrade Scanner for PHP Compatibility – extensions et thèmes WordPress",desc:"DSSarl Upgrade Scanner analyse les extensions et thèmes de votre propre serveur et signale les incompatibilités probables avec une version plus récente de PHP, jusqu'à PHP 8.5. Extensions premium incluses, rien n'est envoyé. Gratuit, par Digital Services SARL."},
+ ar:{kicker:"إضافة ووردبريس مجانية",sub:"فاحص توافق PHP",lead:"تريد شركة الاستضافة نقلك إلى إصدار أحدث من PHP. تفحص DSSarl Upgrade Scanner الإضافات والقوالب الموجودة على خادمك الخاص وتنبّه إلى حالات عدم التوافق المحتملة مع إصدار PHP الذي تختاره، لتعرف أين تبحث قبل الانتقال.",ctaSoon:"قريبًا على WordPress.org",ctaFree:"احصل عليها مجانًا من WordPress.org",ctaHow:"كيف تعمل",ctaNote:"مجانية. بدون حساب وبدون مفتاح API.",whatTitle:"ماذا تفعل DSSarl Upgrade Scanner",w1t:"تعمل على خادمك الخاص",w1d:"يقرأ الفحص ملفات PHP على خادمك. لا خدمة خارجية ولا حساب، ولا تُرسل شيفرتك إلى أي جهة.",w2t:"تشمل الإضافات المدفوعة والمخصصة",w2d:"لأن الفحص محلي، فهو يشمل أيضًا الإضافات والقوالب المدفوعة والمخصصة غير الموجودة على WordPress.org.",w3t:"إصدار PHP المستهدف حتى 8.5",w3d:"اختر إصدار PHP صادرًا واحدًا (من 7.0 إلى 8.5) وافحص على أساسه، دون تنبيهات عن إصدارات لم تصدر بعد.",w4t:"مصممة للاستضافة المشتركة",w4d:"دفعات قصيرة قابلة للاستئناف مع شريط تقدم. أغلق التبويب ويستمر الفحص في الخلفية. يمكنك الإلغاء في أي وقت.",w5t:"نتائج حسب الإضافة والقاعدة والملف",w5d:"الأخطاء أولًا ثم التحذيرات، مجمّعة حسب الإضافة أو القالب، ثم حسب القاعدة وحسب الملف والسطر. يظهر تنبيه «تحديث متوفر» حيث قد يفيد التحديث أولًا.",w6t:"ركّز على الشيفرة التي تعمل فعلًا",w6d:"تجاهل قاعدة أو ملفًا راجعته من قبل. تُميَّز شيفرة الطرف الثالث وشيفرة التطوير (مثل مجلدي vendor و tests) ويمكن إخفاؤها.",w7t:"للقراءة فقط",w7d:"لا تعدّل DSSarl Upgrade Scanner ملفاتك أبدًا ولا تغيّر إصدار PHP. تُريك أين تبحث، ولا تصلح الشيفرة.",howTitle:"كيف تعمل",s1:"اذهب إلى أدوات &gt; DSSarl Upgrade Scanner (للمديرين فقط).",s2:"اختر إصدار PHP الذي تنوي الانتقال إليه.",s3:"اختر الإضافات والقوالب المراد فحصها. الإضافات والقالب النشطة محددة افتراضيًا.",s4:"اضغط «فحص» وتابع شريط التقدم.",s5:"اقرأ النتائج، ثم حدّث الإضافات أو تواصل مع مطوّرها أو مع مبرمج، واختبر على موقع تجريبي قبل تغيير إصدار PHP.",shotsTitle:"لقطات الشاشة",cap1:"اختر إصدار PHP المستهدف والإضافات والقوالب المراد فحصها.",cap3:"ملخص النتائج: الأخطاء والتحذيرات والملفات غير المفحوصة والملفات المفحوصة لكل إضافة أو قالب، مع إصدار PHP المستهدف وإصدار القواعد المستخدم.",cap4:"نتائج إضافة واحدة حسب القاعدة وحسب الملف، مع خيارات التجاهل وتمييز شيفرة الطرف الثالث وشيفرة التطوير.",readTitle:"يرجى القراءة",disc:"هذه النتائج صادرة عن تحليل ثابت آلي، وهي للاسترشاد فقط. قد تتضمن تنبيهات خاطئة، وقد لا تكشف بعض المشكلات. النتيجة الخالية من الأخطاء لا تضمن أن موقعك سيعمل على إصدار PHP هذا. خذ نسخة احتياطية واختبر على موقع تجريبي قبل تغيير إصدار PHP.",privacy:"الخصوصية: يتم الفحص بالكامل على خادمك الخاص. لا يرسل DSSarl Upgrade Scanner الشيفرة البرمجية أو الملفات أو نتائج الفحص أو أي بيانات أخرى من موقعك إلى أي جهة.",credit:"تعتمد على مشروعي PHP_CodeSniffer و PHPCompatibility مفتوحي المصدر. DSSarl Upgrade Scanner إضافة مستقلة من Digital Services SARL، وليست تابعة لهذين المشروعين ولا معتمدة منهما.",contactTitle:"لديك سؤال؟",by:"DSSarl Upgrade Scanner من تطوير Digital Services SARL، نواكشوط، موريتانيا.",home:"كل إضافاتنا",tm:"WordPress و PHP علامتان تجاريتان لمالكيهما.",title:"DSSarl Upgrade Scanner for PHP Compatibility – إضافات وقوالب ووردبريس",desc:"تفحص DSSarl Upgrade Scanner الإضافات والقوالب على خادمك الخاص وتنبّه إلى حالات عدم التوافق المحتملة مع إصدار أحدث من PHP، حتى PHP 8.5. تشمل الإضافات المدفوعة، ولا يُرسل أي شيء. مجانية، من Digital Services SARL."}
+};
+const AL={fr:{alt1:"Écran d'DSSarl Upgrade Scanner : version de PHP cible et liste des extensions et thèmes à analyser",alt3:"Tableau récapitulatif des résultats par extension ou thème",alt4:"Résultats pour une extension, par règle et par fichier"},ar:{alt1:"شاشة DSSarl Upgrade Scanner: إصدار PHP المستهدف وقائمة الإضافات والقوالب المراد فحصها",alt3:"جدول ملخص النتائج حسب الإضافة أو القالب",alt4:"نتائج إضافة واحدة حسب القاعدة وحسب الملف"}};
+const md=document.querySelector('meta[name=description]');
+const EN={};document.querySelectorAll('[data-t]').forEach(e=>{if(e.tagName!=='IMG')EN[e.dataset.t]=e.innerHTML});EN.title=document.title;EN.desc=md.content;T.en=EN;
+const ALEN={};document.querySelectorAll('img[data-t]').forEach(e=>ALEN[e.dataset.t]=e.alt);AL.en=ALEN;
+function setLang(l){const d=T[l]||EN,a=AL[l]||ALEN;document.querySelectorAll('[data-t]').forEach(e=>{if(e.tagName==='IMG'){if(a[e.dataset.t])e.alt=a[e.dataset.t]}else if(d[e.dataset.t])e.innerHTML=d[e.dataset.t]});document.title=d.title;md.content=d.desc;document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));try{localStorage.setItem('lang',l)}catch(e){}}
+document.querySelectorAll('.langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+let saved;try{saved=localStorage.getItem('lang')}catch(e){}
+const nav=(navigator.language||'en').slice(0,2);setLang(saved||(T[nav]?nav:'en'));
+document.getElementById('y').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
