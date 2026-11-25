@@ -130,6 +130,22 @@ Tanger</code></pre>
 </ul>
 <figure><img src="screenshot-8.jpg" width="1200" height="718" loading="lazy" alt="Checkout block showing the region next to the city (Casablanca – Casablanca-Settat) and its delivery fee"></figure>
 
+<h3>Step 7. Home delivery and stop desk at different prices</h3>
+<p>Many couriers charge one price to deliver to the customer's door and another when the customer collects the parcel at the courier's office (stop desk). Since CityFee 1.5.0 you can offer both, each with its own price per city. This is part of the free plugin.</p>
+<ol>
+<li>In your shipping zone (step 3), add <strong>Delivery by city</strong> twice. Leave the first one on <strong>Fee to charge: Home-delivery fee</strong> and give it a title such as "Home delivery". Set the second one to <strong>Stop-desk fee</strong> and give it a title such as "Stop desk".</li>
+<li>The <strong>Cities</strong> screen then shows a <strong>Stop-desk fee</strong> next to each city's fee. To paste both at once, put the home-delivery fee first, then the stop-desk fee:</li>
+</ol>
+<pre dir="ltr"><code>Alger;400;250
+Oran;600;300</code></pre>
+<ul>
+<li>A city without a stop-desk fee uses the default fee of the stop-desk method. If that is empty too, stop desk is not offered for that city.</li>
+<li>Cities marked <strong>Not delivered</strong> get neither option.</li>
+<li>At checkout, the customer chooses one of the two. Cash on Delivery works with both. If you limited Cash on Delivery to some shipping methods (see step 3), add "Delivery by city" to its list.</li>
+<li>One price per city for each option: CityFee does not pick a specific office and does not price by weight.</li>
+</ul>
+<p>Existing stores see no change when they update, and their fees are kept.</p>
+
 <h2>Quick checklist</h2>
 <ul class="check">
 <li>Country chosen, city dropdown on</li>
@@ -139,10 +155,11 @@ Tanger</code></pre>
 <li>Fee changes with the city in a test checkout</li>
 <li>Cities you don't serve marked "Not delivered"</li>
 <li>Long list: only your regions, region shown next to the city</li>
+<li>Stop desk (optional): second "Delivery by city" set to "Stop-desk fee", stop-desk fees or its default fee set</li>
 </ul>
 
 <h2>Want more?</h2>
-<p>CityFee Pro (paid, by us) adds city groups with one fee per group, free delivery above a cart amount per city or group, hiding Cash on Delivery for selected cities, and CSV import and export. The free plugin works on its own. Details: <a href="/cityfee/">dssarl.com/cityfee</a>.</p>
+<p>CityFee Pro (paid, by us) adds city groups with one fee per group, free delivery above a cart amount per city or group, hiding Cash on Delivery for selected cities, and CSV import and export (with a <code>stop_desk_fee</code> column). The free plugin works on its own. Details: <a href="/cityfee/">dssarl.com/cityfee</a>.</p>
 <p>Need help with setup? Ask in the <a href="https://wordpress.org/support/plugin/cityfee/">CityFee support forum on WordPress.org</a>.</p>
 </article>
 
@@ -212,6 +229,22 @@ Tanger</code></pre>
 </ul>
 <figure><img src="screenshot-8.jpg" width="1200" height="718" loading="lazy" alt="Bloc Validation de commande avec la région affichée à côté de la ville (Casablanca – Casablanca-Settat) et ses frais de livraison"></figure>
 
+<h3>Étape 7. Livraison à domicile et stop desk (retrait au bureau) à des prix différents</h3>
+<p>Beaucoup de transporteurs facturent un prix pour livrer à la porte du client et un autre quand le client retire son colis au bureau du transporteur (stop desk). Depuis CityFee 1.5.0, vous pouvez proposer les deux, chacun avec son propre prix par ville. Cela fait partie de la version gratuite.</p>
+<ol>
+<li>Dans votre zone d'expédition (étape 3), ajoutez deux fois le mode <strong>« Livraison par ville »</strong>. Laissez le premier sur <strong>« Frais à appliquer » : « Frais de livraison à domicile »</strong> (Fee to charge: Home-delivery fee), avec un titre comme « Livraison à domicile ». Réglez le second sur <strong>« Frais stop desk »</strong> (Stop-desk fee), avec un titre comme « Stop desk ».</li>
+<li>L'écran <strong>Villes</strong> affiche alors des <strong>« Frais stop desk »</strong> à côté des frais de chaque ville. Pour coller les deux d'un coup, mettez d'abord les frais à domicile, puis les frais stop desk :</li>
+</ol>
+<pre dir="ltr"><code>Alger;400;250
+Oran;600;300</code></pre>
+<ul>
+<li>Une ville sans frais stop desk prend les frais par défaut du mode stop desk. Si ceux-ci sont vides aussi, le stop desk n'est pas proposé pour cette ville.</li>
+<li>Les villes marquées <strong>« Non livrée »</strong> n'ont aucune des deux options.</li>
+<li>Au moment de commander, le client choisit l'une des deux. Le paiement à la livraison fonctionne avec les deux. Si vous l'avez limité à certains modes d'expédition (voir l'étape 3), ajoutez « Livraison par ville » à sa liste.</li>
+<li>Un seul prix par ville pour chaque option : CityFee ne choisit pas un bureau précis et ne calcule pas de prix au poids.</li>
+</ul>
+<p>Les boutiques existantes ne voient aucun changement lors de la mise à jour, et leurs frais sont conservés.</p>
+
 <h2>Récapitulatif</h2>
 <ul class="check">
 <li>Pays choisi, « Liste de villes à la commande » activée</li>
@@ -221,10 +254,11 @@ Tanger</code></pre>
 <li>Les frais changent avec la ville lors d'une commande test</li>
 <li>Villes non desservies marquées « Non livrée »</li>
 <li>Longue liste : seulement vos régions, région affichée à côté de la ville</li>
+<li>Stop desk (facultatif) : second « Livraison par ville » réglé sur « Frais stop desk », frais stop desk ou frais par défaut renseignés</li>
 </ul>
 
 <h2>Pour aller plus loin</h2>
-<p>CityFee Pro (payant, édité par nous) ajoute des groupes de villes avec un tarif par groupe, la livraison gratuite au-delà d'un montant de panier par ville ou par groupe, le masquage du paiement à la livraison pour certaines villes, et l'import/export CSV. La version gratuite fonctionne seule. Détails : <a href="/cityfee/">dssarl.com/cityfee</a>.</p>
+<p>CityFee Pro (payant, édité par nous) ajoute des groupes de villes avec un tarif par groupe, la livraison gratuite au-delà d'un montant de panier par ville ou par groupe, le masquage du paiement à la livraison pour certaines villes, et l'import/export CSV (avec une colonne <code>stop_desk_fee</code>). La version gratuite fonctionne seule. Détails : <a href="/cityfee/">dssarl.com/cityfee</a>.</p>
 <p>Besoin d'aide pour la configuration ? Posez votre question sur le <a href="https://wordpress.org/support/plugin/cityfee/">forum d'assistance de CityFee sur WordPress.org</a>.</p>
 </article>
 
@@ -294,6 +328,22 @@ Tanger</code></pre>
 </ul>
 <figure><img src="screenshot-8.jpg" width="1200" height="718" loading="lazy" alt="صفحة الدفع بالبلوكات مع المنطقة بجانب المدينة (Casablanca / الدار البيضاء – Casablanca-Settat) وسعر التوصيل"></figure>
 
+<h3>الخطوة 7: التوصيل إلى المنزل والاستلام من المكتب (ستوب ديسك) بسعرين مختلفين</h3>
+<p>كثير من شركات التوصيل تحتسب سعرًا للتوصيل إلى باب الزبون وسعرًا آخر عندما يستلم الزبون طرده من مكتب الشركة (ستوب ديسك، Stop desk). منذ النسخة 1.5.0 من CityFee يمكنك عرض الخيارين، لكل منهما سعره الخاص حسب المدينة، وذلك في النسخة المجانية.</p>
+<ol>
+<li>في منطقة الشحن (الخطوة 3)، أضف طريقة <strong>«التوصيل حسب المدينة»</strong> مرتين. اترك الأولى على <strong>«السعر المطبّق»: «سعر التوصيل إلى المنزل»</strong> (Fee to charge: Home-delivery fee) وسمِّها مثلًا «التوصيل إلى المنزل». واضبط الثانية على <strong>«سعر الاستلام من المكتب»</strong> (Stop-desk fee) وسمِّها مثلًا «ستوب ديسك».</li>
+<li>تعرض شاشة <strong>المدن</strong> بعد ذلك <strong>«سعر الاستلام من المكتب»</strong> بجانب سعر كل مدينة. للصق السعرين معًا، ضع سعر التوصيل إلى المنزل أولًا ثم سعر الاستلام من المكتب:</li>
+</ol>
+<pre dir="ltr" lang="en"><code>Alger;400;250
+Oran;600;300</code></pre>
+<ul>
+<li>المدينة التي ليس لها سعر للاستلام من المكتب تأخذ الرسوم الافتراضية لطريقة الاستلام من المكتب. وإذا كانت هذه الرسوم فارغة أيضًا، فلا يُعرض الاستلام من المكتب لهذه المدينة.</li>
+<li>المدن المعلّمة بـ <strong>«لا يتم التوصيل»</strong> لا يظهر لها أيّ من الخيارين.</li>
+<li>عند إتمام الطلب يختار الزبون أحد الخيارين. يعمل الدفع عند الاستلام مع الاثنين، وإذا كنت قد حصرته في طرق شحن معيّنة (راجع الخطوة 3) فأضف «التوصيل حسب المدينة» إلى قائمتها.</li>
+<li>سعر واحد لكل مدينة في كل خيار: لا تختار CityFee مكتبًا محدّدًا ولا تحسب السعر حسب الوزن.</li>
+</ul>
+<p>المتاجر الحالية لا ترى أي تغيير عند التحديث، وتبقى أسعارها كما هي.</p>
+
 <h2>قائمة تحقق سريعة</h2>
 <ul class="check">
 <li>الدولة مختارة و«قائمة المدن عند إتمام الطلب» مفعّلة</li>
@@ -303,10 +353,11 @@ Tanger</code></pre>
 <li>السعر يتغيّر مع المدينة في طلب تجريبي</li>
 <li>المدن غير المخدومة معلّمة بـ «لا يتم التوصيل»</li>
 <li>القائمة الطويلة: مناطقك فقط، والمنطقة ظاهرة بجانب المدينة</li>
+<li>الاستلام من المكتب (اختياري): طريقة «التوصيل حسب المدينة» ثانية مضبوطة على «سعر الاستلام من المكتب»، وأسعار المكتب أو رسومها الافتراضية محدّدة</li>
 </ul>
 
 <h2>للمزيد</h2>
-<p>نسخة CityFee Pro (مدفوعة، من تطويرنا) تضيف مجموعات مدن بسعر واحد لكل مجموعة، والتوصيل المجاني فوق مبلغ معيّن للسلة حسب المدينة أو المجموعة، وإخفاء الدفع عند الاستلام لمدن محدّدة، واستيراد وتصدير القوائم بصيغة CSV. النسخة المجانية تعمل وحدها. التفاصيل: <a href="/cityfee/" dir="ltr">dssarl.com/cityfee</a>.</p>
+<p>نسخة CityFee Pro (مدفوعة، من تطويرنا) تضيف مجموعات مدن بسعر واحد لكل مجموعة، والتوصيل المجاني فوق مبلغ معيّن للسلة حسب المدينة أو المجموعة، وإخفاء الدفع عند الاستلام لمدن محدّدة، واستيراد وتصدير القوائم بصيغة CSV (مع عمود <code dir="ltr">stop_desk_fee</code>). النسخة المجانية تعمل وحدها. التفاصيل: <a href="/cityfee/" dir="ltr">dssarl.com/cityfee</a>.</p>
 <p>تحتاج مساعدة في الإعداد؟ اطرح سؤالك في <a href="https://wordpress.org/support/plugin/cityfee/">منتدى دعم CityFee على WordPress.org</a>.</p>
 </article>
 </main>
